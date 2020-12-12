@@ -14,6 +14,7 @@ plugins {
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
+    maven {url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     jcenter()
 }
 
@@ -23,6 +24,10 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:29.0-jre'
+    
+    // https://mvnrepository.com/artifact/commons-net/commons-net
+	compile group: 'commons-net', name: 'commons-net', version: '3.6'
+    
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
