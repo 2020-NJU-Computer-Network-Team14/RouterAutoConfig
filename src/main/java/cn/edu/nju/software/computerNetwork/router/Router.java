@@ -64,8 +64,8 @@ public class Router {
 	//@formatter:on
 
 	public String ping(String ip) throws IOException {
-		String commond = "ping " + ip;
-		String message = telnetService.execute(commond);
+		String command = "ping " + ip;
+		String message = telnetService.execute(command);
 		if (message.contains("!!!!!"))
 			return "Success";
 		else if (message.contains("UUUUU"))
@@ -77,47 +77,47 @@ public class Router {
 
 	public void configInterface(String interfaceName, String ip, String mask) throws IOException {
 
-		String commond = "conf t";
-		telnetService.execute(commond);
-		commond = "int " + interfaceName;
-		telnetService.execute(commond);
-		commond = "ip address " + ip + " " + mask;
-		telnetService.execute(commond);
+		String command = "conf t";
+		telnetService.execute(command);
+		command = "int " + interfaceName;
+		telnetService.execute(command);
+		command = "ip address " + ip + " " + mask;
+		telnetService.execute(command);
 
-		commond = "clock rate 56000";
-		telnetService.execute(commond);
+		command = "clock rate 56000";
+		telnetService.execute(command);
 
-		commond = "no shutdown";
-		telnetService.execute(commond);
-		commond = "end";
-		telnetService.execute(commond);
+		command = "no shutdown";
+		telnetService.execute(command);
+		command = "end";
+		telnetService.execute(command);
 
 	}
 
 	public void configStaticRouting(String aimIp, String mask, String nextHopIp) throws IOException {
-		String commond = "conf t";
-		telnetService.execute(commond);
-		commond = "ip route-static " + aimIp + " " + mask + " " + nextHopIp;
-		telnetService.execute(commond);
-		commond = "end";
-		telnetService.execute(commond);
+		String command = "conf t";
+		telnetService.execute(command);
+		command = "ip route-static " + aimIp + " " + mask + " " + nextHopIp;
+		telnetService.execute(command);
+		command = "end";
+		telnetService.execute(command);
 	}
 
 	public void configCreateAccessListStandard(String number, String permitOrDeny, String ipOrAny, String mask)
 			throws IOException {
-		String commond = "conf t";
-		telnetService.execute(commond);
-		commond = "access-list " + number + " " + permitOrDeny + " " + ipOrAny + " " + mask;
-		telnetService.execute(commond);
-		commond = "end";
-		telnetService.execute(commond);
+		String command = "conf t";
+		telnetService.execute(command);
+		command = "access-list " + number + " " + permitOrDeny + " " + ipOrAny + " " + mask;
+		telnetService.execute(command);
+		command = "end";
+		telnetService.execute(command);
 	}
 
-	public void configCreateAccessListextend(String number, String permitOrDeny, String protocolOrPort, String sourceIp,
+	public void configCreateAccessListExtend(String number, String permitOrDeny, String protocolOrPort, String sourceIp,
 			String sourceMask, String aimIp, String aimMask, String relation, String protocol) throws IOException {
 
-		String commond = "conf t";
-		telnetService.execute(commond);
+		String command = "conf t";
+		telnetService.execute(command);
 		StringBuilder sb = new StringBuilder();
 		sb.append("access-list ");
 		sb.append(" ");
@@ -153,13 +153,25 @@ public class Router {
 	public void configApplyAccessList(String interfaceName, String protocol, String number, String inOrout)
 			throws IOException {
 
-		String commond = "conf t";
-		telnetService.execute(commond);
-		commond = "int " + interfaceName;
-		telnetService.execute(commond);
-		commond = protocol + " access-group " + " " + number + " " + inOrout;
-		telnetService.execute(commond);
+		String command = "conf t";
+		telnetService.execute(command);
+		command = "int " + interfaceName;
+		telnetService.execute(command);
+		command = protocol + " access-group " + " " + number + " " + inOrout;
+		telnetService.execute(command);
 		telnetService.execute("end");
+	}
+
+	public String showIpAccessList() throws IOException {
+		String command = "show ip access-list";
+		String list = telnetService.execute(command);
+		return list;
+	}
+
+	public String showIpInterface() throws IOException {
+		String command = "show ip int";
+		String list = telnetService.execute(command);
+		return list;
 	}
 
 }
