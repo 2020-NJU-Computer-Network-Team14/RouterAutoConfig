@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>配置ACL</title>
+        <link rel="icon" type="image/png" href="assets/i/favicon.jpg">
+        <link rel="stylesheet" href="assets/css/amazeui.min.css">
+        <link rel="stylesheet" href="assets/css/app.css">
+        <link rel="stylesheet" href="assets/css/admin.css">
+        <style>
+        </style>
+        <script src="assets/js/jquery-3.3.1.js"></script>
+        <script src="assets/js/amazeui.min.js"></script>
+
+    </head>
+
+    <body>
+        <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+            <div class="am-offcanvas-bar admin-offcanvas-bar">
+                <ul class="am-list admin-sidebar-list">
+                    <li><a href="interface.html">配置接口</a></li>
+                    <li><a href="route.html">配置路由</a></li>
+                    <li><a href="edit.html">编辑ACL</a></li>
+                    <li><a href="config.html">配置ACL</a></li>
+                    <li><a href="ping.html">Ping</a></li>
+                    <li><a href="command.html">控制台</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div style="width: 50%; margin: 100px auto">
+                <h1>配置ACL</h1>
+                <br>
+                <div class="am-g" style="font-size: 20px">
+                    <div class="am-u-lg-3">
+                        <input type="text" class="am-form-field" placeholder="接口">
+                    </div>
+                    <div class="am-u-lg-6">
+                        <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="doc-radio-1" value="option1" style="width: 20px; height: 20px" checked>&nbsp;出站</label>
+                        <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="doc-radio-1" value="option2" style="width: 20px; height: 20px">&nbsp;入站</label>
+                    </div>
+                </div>
+                <br>
+                <div class="am-g">
+                    <div class="am-u-lg-6">
+                        <input type="text" class="am-form-field" placeholder="编号/名称">
+                    </div>
+                    <div class="am-u-lg-6">
+                        <button type="button" class="am-btn am-btn-secondary">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
