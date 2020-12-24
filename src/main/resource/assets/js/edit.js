@@ -7,7 +7,7 @@ $("#saveNum").click(function () {
         url: "/",
         data: {
             num: $("#num").val(),
-            allow: $("input[name='radioNum']:checked").val(),
+            permit: $("input[name='radioNum']:checked").val(),
             ip: $("#ipNum").val(),
             mask: $("#maskNum").val(),
             protocol: $("#protocolNum").val(),
@@ -27,7 +27,7 @@ $("#saveName").click(function () {
         url: "/",
         data: {
             name: $("#name").val(),
-            allow: $("input[name='radioNum']:checked").val(),
+            permit: $("input[name='radioNum']:checked").val(),
             ip: $("#ipName").val(),
             mask: $("#maskName").val(),
             protocol: $("#protocolName").val(),
