@@ -60,9 +60,18 @@ public class TelnetService implements AutoCloseable {
     private void login(String telnetPassword, String enablePassword) throws IOException {
         String str = getOutput();
         if (str.endsWith(":")) {
+            if (telnetPassword == null) {
+                throw new IllegalArgumentException("Telnet密码为空！");
+            }
             inputPassword(telnetPassword, "Telnet");
         }
-        executeWithoutRemove("enable");
+        String enableOutput = execute("enable");
+        if (enableOutput.contains("% No password set")) {
+            throw new IllegalArgumentException("路由器未设置enable密码，请先设置路由器enable密码，再进行本操作！");
+        }
+        if (telnetPassword == null) {
+            throw new IllegalArgumentException("Enable密码为空！");
+        }
         inputPassword(enablePassword, "Enable");
     }
 
