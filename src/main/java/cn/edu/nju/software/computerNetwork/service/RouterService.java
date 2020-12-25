@@ -28,8 +28,9 @@ public interface RouterService {
     String configCreateAccessListExtend(String routerName, String number, String permitOrDeny, String protocolOrPort,
         String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String protocol);
 
-    String configApplyAccessList(String routerName, String interfaceName, String protocol, String number,
-        String inOrout);
+    String configApplyAccessList(String routerName, String interfaceName, String number, String inOrout);
+
+    String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout);
 
     String showIpAccessList(String routerName);
 

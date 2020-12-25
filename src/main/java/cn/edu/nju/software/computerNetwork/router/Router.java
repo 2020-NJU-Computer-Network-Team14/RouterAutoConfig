@@ -1,6 +1,8 @@
 package cn.edu.nju.software.computerNetwork.router;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import cn.edu.nju.software.computerNetwork.telnet.TelnetService;
 
@@ -16,22 +18,61 @@ import cn.edu.nju.software.computerNetwork.telnet.TelnetService;
  */
 public class Router {
 
-	private String name;
+    private String name = "Router";
 
-	private TelnetService telnetService;
+    private TelnetService telnetService;
 
-	public String connect(String ip, int port, String telnetPassword, String enablePassword) {
-		if (telnetService != null) {
-			return "路由器telnet已经处于连接状态，无需重新连接";
-		}
-		try {
-			telnetService = new TelnetService();
-			telnetService.connect(ip, port, telnetPassword, enablePassword);
-			return "连接成功";
-		} catch (Exception e) {
-			return "连接失败：原因为" + e.getMessage();
-		}
-	}
+    private List<String> promptInEnable() {
+        return Arrays.asList(name + "#");
+    }
+
+    private List<String> promptInConfigureTerminal() {
+        return Arrays.asList(name + "(config)#");
+    }
+
+    private List<String> promptInConfigureInterface() {
+        return Arrays.asList(name + "(config-if)#");
+    }
+
+    public void initName() throws IOException {
+        String command = "conf t";
+        telnetService.executeWithoutRemove(command, Arrays.asList("#"));
+
+        command = "hostname " + name;
+        telnetService.executeWithoutRemove(command, Arrays.asList("#"));
+
+        end();
+    }
+
+    private void end() throws IOException {
+        String command;
+        command = "end";
+        telnetService.executeWithoutRemove(command, promptInEnable());
+    }
+
+    public void setRouterName(String oldName, String n) throws IOException {
+
+        inConfigureTerminal();
+
+        String command = "hostname " + name;
+        telnetService.executeWithoutRemove(command, promptInConfigureTerminal());
+
+        end();
+    }
+
+    public String connect(String ip, int port, String telnetPassword, String enablePassword) {
+        if (telnetService != null) {
+            return "路由器telnet已经处于连接状态，无需重新连接";
+        }
+        try {
+            telnetService = new TelnetService();
+            telnetService.connect(ip, port, telnetPassword, enablePassword);
+            return "Success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "连接失败：原因为" + e.getMessage();
+        }
+    }
 //@formatter:off
     /*
      * 
@@ -63,115 +104,145 @@ public class Router {
      */
 	//@formatter:on
 
-	public String ping(String ip) throws IOException {
-		String command = "ping " + ip;
-		String message = telnetService.execute(command);
-		if (message.contains("!!!!!"))
-			return "Success";
-		else if (message.contains("UUUUU"))
-			return "Not accessible";
-		else if (message.contains("!!!!!"))
-			return "Overtime";
-		return "";
-	}
+    public String ping(String ip) throws IOException {
+        String command = "ping " + ip;
+        String message = telnetService.execute(command, promptInEnable());
+        if (message.contains("!!!!!"))
+            return "Success";
+        else if (message.contains("....."))
+            return "Overtime";
+        else if (message.replaceAll("[\r\n]", "").matches(".*[\\.U]{5}.*"))
+            return "Not accessible";
+        return "";
+    }
 
-	public void configInterface(String interfaceName, String ip, String mask) throws IOException {
+    public void configInterface(String interfaceName, String ip, String mask) throws IOException {
 
-		String command = "conf t";
-		telnetService.execute(command);
-		command = "int " + interfaceName;
-		telnetService.execute(command);
-		command = "ip address " + ip + " " + mask;
-		telnetService.execute(command);
+        inConfigureTerminal();
 
-		command = "clock rate 56000";
-		telnetService.execute(command);
+        String command = "int " + interfaceName;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
 
-		command = "no shutdown";
-		telnetService.execute(command);
-		command = "end";
-		telnetService.execute(command);
+        command = "ip address " + ip + " " + mask;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
 
-	}
+        command = "clock rate 56000";
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
 
-	public void configStaticRouting(String aimIp, String mask, String nextHopIp) throws IOException {
-		String command = "conf t";
-		telnetService.execute(command);
-		command = "ip route-static " + aimIp + " " + mask + " " + nextHopIp;
-		telnetService.execute(command);
-		command = "end";
-		telnetService.execute(command);
-	}
+        command = "no shutdown";
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
 
-	public void configCreateAccessListStandard(String number, String permitOrDeny, String ipOrAny, String mask)
-			throws IOException {
-		String command = "conf t";
-		telnetService.execute(command);
-		command = "access-list " + number + " " + permitOrDeny + " " + ipOrAny + " " + mask;
-		telnetService.execute(command);
-		command = "end";
-		telnetService.execute(command);
-	}
+        end();
+    }
 
-	public void configCreateAccessListExtend(String number, String permitOrDeny, String protocolOrPort, String sourceIp,
-			String sourceMask, String aimIp, String aimMask, String relation, String protocol) throws IOException {
+    public void configStaticRouting(String aimIp, String mask, String nextHopIp) throws IOException {
+        String command;
 
-		String command = "conf t";
-		telnetService.execute(command);
-		StringBuilder sb = new StringBuilder();
-		sb.append("access-list ");
-		sb.append(" ");
-		sb.append(number);
-		sb.append(" ");
-		sb.append(permitOrDeny);
-		sb.append(" ");
-		sb.append(protocolOrPort);
-		sb.append(" ");
-		sb.append(sourceIp);
-		if (!"".equals(sourceMask)) {
-			sb.append(" ");
-			sb.append(sourceMask);
-		}
-		sb.append(" ");
-		sb.append(aimIp);
-		if (!"".equals(aimMask)) {
-			sb.append(" ");
-			sb.append(aimMask);
-		}
-		if (!"".equals(relation)) {
-			sb.append(" ");
-			sb.append(relation);
-		}
-		if (!"".equals(protocol)) {
-			sb.append(" ");
-			sb.append(protocol);
-		}
+        inConfigureTerminal();
 
-		telnetService.execute(sb.toString());
-	}
+        command = "ip route " + aimIp + " " + mask + " " + nextHopIp;
+        telnetService.executeWithoutRemove(command, promptInConfigureTerminal());
 
-	public void configApplyAccessList(String interfaceName, String protocol, String number, String inOrout)
-			throws IOException {
+        end();
+    }
 
-		String command = "conf t";
-		telnetService.execute(command);
-		command = "int " + interfaceName;
-		telnetService.execute(command);
-		command = protocol + " access-group " + " " + number + " " + inOrout;
-		telnetService.execute(command);
-		telnetService.execute("end");
-	}
+    private void inConfigureTerminal() throws IOException {
+        String command = "conf t";
+        telnetService.executeWithoutRemove(command, promptInConfigureTerminal());
+    }
 
-	public String showIpAccessList() throws IOException {
-		String command = "show ip access-list";
-		String list = telnetService.execute(command);
-		return list;
-	}
+    public void configCreateAccessListStandard(String number, String permitOrDeny, String ipOrAny, String mask)
+        throws IOException {
 
-	public String showIpInterface() throws IOException {
-		String command = "show ip int";
-		String list = telnetService.execute(command);
-		return list;
-	}
+        inConfigureTerminal();
+
+        String command = "access-list " + number + " " + permitOrDeny + " " + ipOrAny + " " + mask;
+        telnetService.executeWithoutRemove(command, promptInConfigureTerminal());
+
+        end();
+    }
+
+    public void configCreateAccessListExtend(String number, String permitOrDeny, String protocolOrPort, String sourceIp,
+        String sourceMask, String aimIp, String aimMask, String relation, String protocol) throws IOException {
+
+        String command;
+
+        inConfigureTerminal();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("access-list ");
+        sb.append(" ");
+        sb.append(number);
+        sb.append(" ");
+        sb.append(permitOrDeny);
+        sb.append(" ");
+        sb.append(protocolOrPort);
+        sb.append(" ");
+        sb.append(sourceIp);
+        if (!"".equals(sourceMask)) {
+            sb.append(" ");
+            sb.append(sourceMask);
+        }
+        sb.append(" ");
+        sb.append(aimIp);
+        if (!"".equals(aimMask)) {
+            sb.append(" ");
+            sb.append(aimMask);
+        }
+        if (!"".equals(relation)) {
+            sb.append(" ");
+            sb.append(relation);
+        }
+        if (!"".equals(protocol)) {
+            sb.append(" ");
+            sb.append(protocol);
+        }
+
+        telnetService.executeWithoutRemove(sb.toString(), promptInConfigureTerminal());
+
+        end();
+    }
+
+    public void configApplyAccessList(String interfaceName, String number, String inOrout) throws IOException {
+
+        String command;
+
+        inConfigureTerminal();
+
+        command = "int " + interfaceName;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
+
+        command = "ip access-group " + " " + number + " " + inOrout;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
+
+        end();
+    }
+
+    public void configCancelAccessList(String interfaceName, String number, String inOrout) throws IOException {
+
+        String command;
+
+        inConfigureTerminal();
+
+        command = "int " + interfaceName;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
+
+        command = "no ip access-group " + " " + number + " " + inOrout;
+        telnetService.executeWithoutRemove(command, promptInConfigureInterface());
+
+        end();
+    }
+
+    public String showIpAccessList() throws IOException {
+        String command = "show ip access-list";
+        String list = telnetService.execute(command, promptInEnable());
+        return list;
+    }
+
+    public String showIpInterface() throws IOException {
+        String command = "show ip int";
+        String list = telnetService.execute(command, promptInEnable());
+        return list;
+    }
 
 }

@@ -37,6 +37,7 @@ public class RouterServiceImpl implements RouterService {
         try {
             routers.get(routerName).configInterface(interfaceName, ip, mask);
         } catch (Exception e) {
+            e.printStackTrace();
             return "IO error";
         }
         return "Success";
@@ -98,18 +99,31 @@ public class RouterServiceImpl implements RouterService {
     }
 
     @Override
-    public String configApplyAccessList(String routerName, String interfaceName, String protocol, String number,
-        String inOrout) {
+    public String configApplyAccessList(String routerName, String interfaceName, String number, String inOrout) {
         if (!routers.containsKey(routerName)) {
             return "Router is not connected";
         }
         try {
-            routers.get(routerName).configApplyAccessList(interfaceName, protocol, number, inOrout);
+            routers.get(routerName).configApplyAccessList(interfaceName, number, inOrout);
         } catch (Exception e) {
             return "IO error";
         }
         return "Success";
     }
+
+    @Override
+    public String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout) {
+        if (!routers.containsKey(routerName)) {
+            return "Router is not connected";
+        }
+        try {
+            routers.get(routerName).configCancelAccessList(interfaceName, number, inOrout);
+        } catch (Exception e) {
+            return "IO error";
+        }
+        return "Success";
+    }
+
 
     @Override
     public String showIpAccessList(String routerName) {

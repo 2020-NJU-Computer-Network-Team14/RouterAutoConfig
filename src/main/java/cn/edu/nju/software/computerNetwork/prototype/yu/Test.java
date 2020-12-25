@@ -78,7 +78,7 @@ public class Test {
     public static void main(String[] args) {
 
         System.out.println("启动Telnet...");
-        String ip = "192.168.10.3";
+        String ip = "192.168.10.4";
         int port = 23;
         String password = "CISCO";
         Test telnet = new Test();
@@ -98,7 +98,11 @@ public class Test {
 
         while (scan.hasNext()) {
             String str = scan.nextLine();
-            telnet.sendCommand(str);
+            if (str.contains("enter")) {
+                telnet.sendCommand("");
+            } else {
+                telnet.sendCommand(str);
+            }
         }
         scan.close();
     }

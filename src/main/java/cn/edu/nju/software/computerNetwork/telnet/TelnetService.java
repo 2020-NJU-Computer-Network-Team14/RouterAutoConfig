@@ -3,6 +3,8 @@ package cn.edu.nju.software.computerNetwork.telnet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.net.telnet.TelnetClient;
 
@@ -58,14 +60,14 @@ public class TelnetService implements AutoCloseable {
      */
 
     private void login(String telnetPassword, String enablePassword) throws IOException {
-        String str = getOutput();
+        String str = getOutput(Arrays.asList(">"));
         if (str.endsWith(":")) {
             if (telnetPassword == null) {
                 throw new IllegalArgumentException("Telnet密码为空！");
             }
             inputPassword(telnetPassword, "Telnet");
         }
-        String enableOutput = execute("enable");
+        String enableOutput = executeWithoutRemove("enable", Arrays.asList("Password:", ">"));
         if (enableOutput.contains("% No password set")) {
             throw new IllegalArgumentException("路由器未设置enable密码，请先设置路由器enable密码，再进行本操作！");
         }
@@ -76,35 +78,35 @@ public class TelnetService implements AutoCloseable {
     }
 
     private void inputPassword(String telnetPassword, String name) throws IOException {
-        String passwordReturn = executeWithoutRemove(telnetPassword);
+        String passwordReturn = executeWithoutRemove(telnetPassword, Arrays.asList("Password:", "#"));
         if (passwordReturn.endsWith(":")) {
             throw new IllegalArgumentException(name + "密码不对！");
         }
     }
 
-    public String executeWithoutRemove(String command) throws IOException {
+    public String executeWithoutRemove(String command, List<String> prompts) throws IOException {
         submitCommand(command);
-        return getOutput().toString();
+        return getOutput(prompts).toString();
     }
 
-    private String getOutput() throws IOException {
+    private String getOutput(List<String> prompts) throws IOException {
         StringBuilder buf = new StringBuilder();
         while (true) {
             char ch = (char)in.read();
             buf.append(ch);
-            if (bufIsEndWithPrompt(buf)) {
+            if (bufIsEndWithPrompt(buf, prompts)) {
                 break;
             }
         }
         return buf.toString();
     }
 
-    public String execute(String command) throws IOException {
-        return removeInputAndPrompt(executeWithoutRemove(command));
+    public String execute(String command, List<String> prompts) throws IOException {
+        return removeInputAndPrompt(executeWithoutRemove(command, prompts));
     }
 
-    public String executeAndGetPrompt(String command) throws IOException {
-        return removeInput(executeWithoutRemove(command));
+    public String executeAndGetPrompt(String command, List<String> prompts) throws IOException {
+        return removeInput(executeWithoutRemove(command, prompts));
     }
 
     private String removeInputAndPrompt(String buf) {
@@ -118,28 +120,30 @@ public class TelnetService implements AutoCloseable {
     }
 
     private int lastLine(String buf) {
-        int high = 0;
         for (int i = buf.length() - 1; i >= 0; --i) {
             if (buf.charAt(i) == '\n') {
-                high = i;
+                return i;
             }
         }
-        return high;
+        return 0;
     }
 
     private int firstLine(String buf) {
-        int low = 0;
         for (int i = 0; i < buf.length(); ++i) {
             if (buf.charAt(i) == '\n') {
-                low = i;
+                return i;
             }
         }
-        return low;
+        return 0;
     }
 
-    private boolean bufIsEndWithPrompt(StringBuilder buf) {
-        char lastChar = buf.charAt(buf.length() - 1);
-        return lastChar == ':' || lastChar == '>' || lastChar == '#';
+    private boolean bufIsEndWithPrompt(StringBuilder buf, List<String> prompts) {
+        for (String prompt : prompts) {
+            if (buf.indexOf(prompt) >= 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void submitCommand(String command) {

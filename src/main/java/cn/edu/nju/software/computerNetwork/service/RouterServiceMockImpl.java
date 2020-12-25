@@ -56,9 +56,8 @@ public class RouterServiceMockImpl implements RouterService {
     }
 
     @Override
-    public String configApplyAccessList(String routerName, String interfaceName, String protocol, String number,
-        String inOrout) {
-        System.out.println(routerName + " " + interfaceName + " " + protocol + " " + number + " " + inOrout);
+    public String configApplyAccessList(String routerName, String interfaceName, String number, String inOrout) {
+        System.out.println(routerName + " " + interfaceName + " " + number + " " + inOrout);
         return "Success";
     }
 
@@ -71,6 +70,12 @@ public class RouterServiceMockImpl implements RouterService {
     @Override
     public String showIpInterface(String routerName) {
         System.out.println(routerName);
+        return "Success";
+    }
+
+    @Override
+    public String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout) {
+        System.out.println(routerName + " " + interfaceName + " " + number + " " + inOrout);
         return "Success";
     }
 
