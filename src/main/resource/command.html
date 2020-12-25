@@ -7,172 +7,43 @@
         <link rel="stylesheet" href="assets/css/amazeui.min.css">
         <link rel="stylesheet" href="assets/css/app.css">
         <link rel="stylesheet" href="assets/css/admin.css">
-        <style>
-        </style>
-        <script src="assets/js/jquery-3.3.1.js"></script>
-        <script src="assets/js/amazeui.min.js"></script>
-        <script src="assets/js/load.js"></script>
+        <script src="assets/js/amaze/jquery-3.3.1.js"></script>
+        <script src="assets/js/amaze/amazeui.min.js"></script>
     </head>
 
     <body>
         <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
             <div class="am-offcanvas-bar admin-offcanvas-bar">
                 <ul class="am-list admin-sidebar-list">
-                    <li><a href="interface.html">配置接口</a></li>
-                    <li><a href="route.html">配置路由</a></li>
-                    <li><a href="edit.html">编辑ACL</a></li>
-                    <li><a href="config.html">配置ACL</a></li>
-                    <li><a href="ping.html">Ping</a></li>
-                    <li><a href="command.html">控制台</a></li>
+                    <li><a id="int">配置接口</a></li>
+                    <li><a id="rout">配置路由</a></li>
+                    <li><a id="edit">编辑ACL</a></li>
+                    <li><a id="conf">配置ACL</a></li>
+                    <li><a id="pi">Ping</a></li>
+                    <li><a id="com">控制台</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="admin-content">
-            <div style="width: 50%; margin: 100px auto">
-                <h1>编辑ACL</h1>
+            <div style="width: 75%; margin: 50px auto">
+                <h1>控制台</h1>
                 <br>
-                <div class="am-tabs" data-am-tabs>
-                    <ul class="am-tabs-nav am-nav am-nav-tabs">
-                        <li class="am-active"><a href="#tabNum">编号方式</a></li>
-                        <li><a href="#tabName">命名方式</a></li>
-                    </ul>
-
-                    <div class="am-tabs-bd">
-                        <div class="am-tab-panel am-fade am-in am-active" id="tabNum">
-                            <div class="am-panel-group" id="acl1">
-                                <div class="am-panel am-panel-default">
-                                    <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#acl1', target: '#list1'}">
-                                            1
-                                        </h4>
-                                    </div>
-                                    <div id="list1" class="am-panel-collapse am-collapse">
-                                        <div class="am-panel-bd">
-                                            <ul class="am-list">
-                                                <li>添加人员</li>
-                                                <li>人员列表</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="am-panel-group" id="addNum">
-                                <div class="am-panel am-panel-default">
-                                    <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addNum', target: '#addNum_'}">
-                                            添加……
-                                        </h4>
-                                    </div>
-
-                                    <div id="addNum_" class="am-panel-collapse am-collapse">
-                                        <div class="am-panel-bd">
-                                            <div class="am-g" style="font-size: 20px">
-                                                <div class="am-u-lg-3">
-                                                    <input id="num"type="text" class="am-form-field" placeholder="编号">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="allowNum" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="forbidNum" style="width: 20px; height: 20px">&nbsp;禁止</label>
-                                                </div>
-                                                <div class="am-u-lg-3">
-                                                    <button id="saveNum" type="button" class="am-btn am-btn-secondary">保存</button>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="am-g">
-                                                <div class="am-u-lg-6">
-                                                    <input id="ipNum" type="text" class="am-form-field" placeholder="IP">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <input id="maskNum" type="text" class="am-form-field" placeholder="子网掩码">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="am-g">
-                                                <div class="am-u-lg-6">
-                                                    <input id="protocolNum" type="text" class="am-form-field" placeholder="协议">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <input id="portNum" type="text" class="am-form-field" placeholder="端口">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="am-tab-panel am-fade" id="tabName">
-                            <div class="am-panel-group" id="aclTest">
-                                <div class="am-panel am-panel-default">
-                                    <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#aclTest', target: '#listTest'}">
-                                            Test
-                                        </h4>
-                                    </div>
-                                    <div id="listTest" class="am-panel-collapse am-collapse">
-                                        <div class="am-panel-bd">
-                                            <ul class="am-list">
-                                                <li>添加人员</li>
-                                                <li>人员列表</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="am-panel-group" id="addName">
-                                <div class="am-panel am-panel-default">
-                                    <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addName', target: '#addName_'}">
-                                            添加……
-                                        </h4>
-                                    </div>
-
-                                    <div id="addName_" class="am-panel-collapse am-collapse">
-                                        <div class="am-panel-bd">
-                                            <div class="am-g" style="font-size: 20px">
-                                                <div class="am-u-lg-3">
-                                                    <input id="name" type="text" class="am-form-field" placeholder="名称">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioName" value="allowName" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioName" value="forbidName" style="width: 20px; height: 20px">&nbsp;禁止</label>
-                                                </div>
-                                                <div class="am-u-lg-3">
-                                                    <button id="saveName" type="button" class="am-btn am-btn-secondary">保存</button>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="am-g">
-                                                <div class="am-u-lg-6">
-                                                    <input id="ipName" type="text" class="am-form-field" placeholder="IP">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <input id="maskName" type="text" class="am-form-field" placeholder="子网掩码">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="am-g">
-                                                <div class="am-u-lg-6">
-                                                    <input id="protocolName" type="text" class="am-form-field" placeholder="协议">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <input id="portName" type="text" class="am-form-field" placeholder="端口">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <section class="am-panel am-panel-default">
+                    <div class="am-panel-hd">输出</div>
+                    <div id="output" class="am-panel-bd">
+                        RouterA>enable<br>
+                        Router#
                     </div>
-                </div>
+                </section>
+                <br>
+                <section class="am-panel am-panel-default">
+                    <div class="am-panel-hd">输入</div>
+                    <input id="command" type="text" class="am-form-field">
+                </section>
             </div>
         </div>
-
-        <script src="assets/js/edit.js"></script>
+        <script src="assets/js/router.js"></script>
+        <script src="assets/js/command.js"></script>
     </body>
 </html>

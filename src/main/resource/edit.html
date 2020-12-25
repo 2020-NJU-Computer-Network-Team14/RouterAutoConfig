@@ -2,15 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>编辑ACL</title>
+        <title></title>
         <link rel="icon" type="image/png" href="assets/i/favicon.jpg">
         <link rel="stylesheet" href="assets/css/amazeui.min.css">
         <link rel="stylesheet" href="assets/css/app.css">
         <link rel="stylesheet" href="assets/css/admin.css">
-        <style>
-        </style>
-        <script src="assets/js/jquery-3.3.1.js"></script>
-        <script src="assets/js/amazeui.min.js"></script>
+        <script src="assets/js/amaze/jquery-3.3.1.js"></script>
+        <script src="assets/js/amaze/amazeui.min.js"></script>
         <script src="assets/js/load.js"></script>
     </head>
 
@@ -18,12 +16,12 @@
         <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
             <div class="am-offcanvas-bar admin-offcanvas-bar">
                 <ul class="am-list admin-sidebar-list">
-                    <li><a href="interface.html">配置接口</a></li>
-                    <li><a href="route.html">配置路由</a></li>
-                    <li><a href="edit.html">编辑ACL</a></li>
-                    <li><a href="config.html">配置ACL</a></li>
-                    <li><a href="ping.html">Ping</a></li>
-                    <li><a href="command.html">控制台</a></li>
+                    <li><a id="int">配置接口</a></li>
+                    <li><a id="rout">配置路由</a></li>
+                    <li><a id="edit">编辑ACL</a></li>
+                    <li><a id="conf">配置ACL</a></li>
+                    <li><a id="pi">Ping</a></li>
+                    <li><a id="com">控制台</a></li>
                 </ul>
             </div>
         </div>
@@ -73,8 +71,8 @@
                                                     <input id="num"type="text" class="am-form-field" placeholder="编号">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="allowNum" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="forbidNum" style="width: 20px; height: 20px">&nbsp;禁止</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="permitNum" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="denyNum" style="width: 20px; height: 20px">&nbsp;禁止</label>
                                                 </div>
                                                 <div class="am-u-lg-3">
                                                     <button id="saveNum" type="button" class="am-btn am-btn-secondary">保存</button>
@@ -172,7 +170,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="assets/js/router.js"></script>
         <script src="assets/js/edit.js"></script>
     </body>
 </html>

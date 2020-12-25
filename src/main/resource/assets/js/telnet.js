@@ -1,9 +1,10 @@
-$("#connect").click(function () {
+$("#telnet").click(function () {
+    window.location.href = "interface.html?router=" + $("#router").val();
     let progress = $.AMUI.progress;
     progress.start();
     $.ajax({
         type: "post",
-        url: "/",
+        url: "/telnet",
         data: {
             ip: $("#ip").val(),
             password: $("#password").val(),
@@ -12,6 +13,7 @@ $("#connect").click(function () {
         },
         success: function (e) {
             progress.done();
+            window.location.href = "interface.html?router=" + $("#router").val();
         }
     });
 });
