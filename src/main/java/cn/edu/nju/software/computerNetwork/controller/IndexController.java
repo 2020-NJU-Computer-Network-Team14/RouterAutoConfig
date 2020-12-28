@@ -16,9 +16,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    @RequestMapping({"/", "index.html"})
+    @RequestMapping("/index")
     public String index() {
         return "index";
+    }
+
+    @RequestMapping("/inter")
+    public String inter() {
+        return "interface";
+    }
+
+    @RequestMapping("/ed")
+    public String ed() {
+        return "edit";
+    }
+
+    @RequestMapping("/conf")
+    public String conf() {
+        return "config";
+    }
+
+    @RequestMapping("/pi")
+    public String pi() {
+        return "ping";
+    }
+
+    @RequestMapping("/rou")
+    public String rou() {
+        return "route";
+    }
+
+    @RequestMapping("/cmd")
+    public String cmd() {
+        return "command";
     }
 
 }
