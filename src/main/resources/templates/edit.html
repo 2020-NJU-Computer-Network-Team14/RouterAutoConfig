@@ -32,68 +32,75 @@
                 <br>
                 <div class="am-tabs" data-am-tabs>
                     <ul class="am-tabs-nav am-nav am-nav-tabs">
-                        <li class="am-active"><a href="#tabNum">编号方式</a></li>
-                        <li><a href="#tabName">命名方式</a></li>
+                        <li class="am-active"><a href="#tabStandard">标准</a></li>
+                        <li><a href="#tabExtended">扩展</a></li>
                     </ul>
 
                     <div class="am-tabs-bd">
-                        <div class="am-tab-panel am-fade am-in am-active" id="tabNum">
+                        <div class="am-tab-panel am-fade am-in am-active" id="tabStandard">
                             <div class="am-panel-group" id="acl1">
                                 <div class="am-panel am-panel-default">
-                                    <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#acl1', target: '#list1'}">
+                                    <div class="am-panel-hd am-g">
+                                        <h4 class="am-panel-title am-u-lg-3" data-am-collapse="{parent: '#acl1', target: '#list1'}">
                                             1
                                         </h4>
+                                        <button id="del1" type="button" class="am-btn-sm am-btn-warning am-u-lg-2" onclick="deleteList(id)">删除</button>
                                     </div>
                                     <div id="list1" class="am-panel-collapse am-collapse">
                                         <div class="am-panel-bd">
-                                            <ul class="am-list">
-                                                <li>添加人员</li>
-                                                <li>人员列表</li>
-                                            </ul>
+                                            <table class="am-table">
+                                                <tr>
+                                                    <td>允许/禁止</td>
+                                                    <td>IP</td>
+                                                    <td>反掩码</td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="permit1_1">允许</td>
+                                                    <td id="ip1_1">192.168.186.3</td>
+                                                    <td id="mask1_1">0.0.0.255</td>
+                                                    <td><button id="del1_1" type="button" class="am-btn-sm am-btn-warning" onclick="deleteTerm(id)">删除</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td id="permit1_2">允许</td>
+                                                    <td id="ip1_2">192.168.186.5</td>
+                                                    <td id="mask1_2">0.0.0.255</td>
+                                                    <td><button id="del1_2" type="button" class="am-btn-sm am-btn-warning" onclick="deleteTerm(id)">删除</button></td>
+                                                </tr>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="am-panel-group" id="addNum">
+                            <div class="am-panel-group" id="addStandard">
                                 <div class="am-panel am-panel-default">
                                     <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addNum', target: '#addNum_'}">
+                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addStandard', target: '#addStandard_'}">
                                             添加……
                                         </h4>
                                     </div>
 
-                                    <div id="addNum_" class="am-panel-collapse am-collapse">
+                                    <div id="addStandard_" class="am-panel-collapse am-collapse">
                                         <div class="am-panel-bd">
                                             <div class="am-g" style="font-size: 20px">
                                                 <div class="am-u-lg-3">
-                                                    <input id="num"type="text" class="am-form-field" placeholder="编号">
+                                                    <input id="idStandard" type="text" class="am-form-field" placeholder="编号/名称">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="permitNum" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioNum" value="denyNum" style="width: 20px; height: 20px">&nbsp;禁止</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioStandard" value="permit" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioStandard" value="deny" style="width: 20px; height: 20px">&nbsp;禁止</label>
                                                 </div>
                                                 <div class="am-u-lg-3">
-                                                    <button id="saveNum" type="button" class="am-btn am-btn-secondary">保存</button>
+                                                    <button id="saveStandard" type="button" class="am-btn am-btn-secondary">保存</button>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="am-g">
                                                 <div class="am-u-lg-6">
-                                                    <input id="ipNum" type="text" class="am-form-field" placeholder="IP">
+                                                    <input id="ipStandard" type="text" class="am-form-field" placeholder="IP">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <input id="maskNum" type="text" class="am-form-field" placeholder="子网掩码">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="am-g">
-                                                <div class="am-u-lg-6">
-                                                    <input id="protocolNum" type="text" class="am-form-field" placeholder="协议">
-                                                </div>
-                                                <div class="am-u-lg-6">
-                                                    <input id="portNum" type="text" class="am-form-field" placeholder="端口">
+                                                    <input id="maskStandard" type="text" class="am-form-field" placeholder="反掩码">
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +109,7 @@
                             </div>
                         </div>
 
-                        <div class="am-tab-panel am-fade" id="tabName">
+                        <div class="am-tab-panel am-fade" id="tabExtended">
                             <div class="am-panel-group" id="aclTest">
                                 <div class="am-panel am-panel-default">
                                     <div class="am-panel-hd">
@@ -121,44 +128,53 @@
                                 </div>
                             </div>
 
-                            <div class="am-panel-group" id="addName">
+                            <div class="am-panel-group" id="addExtended">
                                 <div class="am-panel am-panel-default">
                                     <div class="am-panel-hd">
-                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addName', target: '#addName_'}">
+                                        <h4 class="am-panel-title" data-am-collapse="{parent: '#addExtended', target: '#addExtended_'}">
                                             添加……
                                         </h4>
                                     </div>
 
-                                    <div id="addName_" class="am-panel-collapse am-collapse">
+                                    <div id="addExtended_" class="am-panel-collapse am-collapse">
                                         <div class="am-panel-bd">
                                             <div class="am-g" style="font-size: 20px">
                                                 <div class="am-u-lg-3">
-                                                    <input id="name" type="text" class="am-form-field" placeholder="名称">
+                                                    <input id="idExtended" type="text" class="am-form-field" placeholder="编号/名称">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioName" value="allowName" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
-                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioName" value="forbidName" style="width: 20px; height: 20px">&nbsp;禁止</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioExtended" value="permit" style="width: 20px; height: 20px" checked>&nbsp;允许</label>
+                                                    <label class="am-radio-inline" style="font-size: 20px"><input type="radio" name="radioExtended" value="deny" style="width: 20px; height: 20px">&nbsp;禁止</label>
                                                 </div>
                                                 <div class="am-u-lg-3">
-                                                    <button id="saveName" type="button" class="am-btn am-btn-secondary">保存</button>
+                                                    <button id="saveExtended" type="button" class="am-btn am-btn-secondary">保存</button>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="am-g">
                                                 <div class="am-u-lg-6">
-                                                    <input id="ipName" type="text" class="am-form-field" placeholder="IP">
+                                                    <input id="srcIpExtended" type="text" class="am-form-field" placeholder="源IP">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <input id="maskName" type="text" class="am-form-field" placeholder="子网掩码">
+                                                    <input id="srcMaskExtended" type="text" class="am-form-field" placeholder="源反掩码">
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="am-g">
                                                 <div class="am-u-lg-6">
-                                                    <input id="protocolName" type="text" class="am-form-field" placeholder="协议">
+                                                    <input id="destIpExtended" type="text" class="am-form-field" placeholder="目的IP">
                                                 </div>
                                                 <div class="am-u-lg-6">
-                                                    <input id="portName" type="text" class="am-form-field" placeholder="端口">
+                                                    <input id="destMaskExtended" type="text" class="am-form-field" placeholder="目的反掩码">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="am-g">
+                                                <div class="am-u-lg-6">
+                                                    <input id="protocol" type="text" class="am-form-field" placeholder="协议">
+                                                </div>
+                                                <div class="am-u-lg-6">
+                                                    <input id="port" type="text" class="am-form-field" placeholder="端口">
                                                 </div>
                                             </div>
                                         </div>
