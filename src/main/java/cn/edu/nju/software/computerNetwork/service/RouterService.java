@@ -1,7 +1,5 @@
 package cn.edu.nju.software.computerNetwork.service;
 
-
-
 /**  
  * @ClassName: IRouterService  
  *
@@ -35,5 +33,10 @@ public interface RouterService {
     String showIpAccessList(String routerName);
 
     String showIpInterface(String routerName);
+
+    String configCancelAccessListGlobal(String routerName, String stdOrext, String number, String inOrout);
+
+    String configCancelAccessListGlobal(String routerName, String numberOrName, String stdOrext, String permitOrDeny,
+        String ipOrAny, String mask);
 
 }

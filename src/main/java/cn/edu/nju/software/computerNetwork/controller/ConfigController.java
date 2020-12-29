@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.nju.software.computerNetwork.service.RouterService;
@@ -105,4 +104,56 @@ public class ConfigController {
         return routerService.showIpInterface(routerName);
     }
 
+    @RequestMapping(value = "standard")
+    public String standard(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String id = user.getParameter("id");
+        String permit = user.getParameter("permit");
+        String ip = user.getParameter("ip");
+        String mask = user.getParameter("mask");
+
+        return routerService.configCreateAccessListStandard(routerName, id, permit, ip, mask);
+    }
+
+    @RequestMapping(value = "extended")
+    public String extend(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String id = user.getParameter("id");
+        String permit = user.getParameter("permit");
+
+        String srcIp = user.getParameter("srcIp");
+        String srcMask = user.getParameter("srcMask");
+
+        String destIp = user.getParameter("destIp");
+        String destMask = user.getParameter("destMask");
+
+        String protocol = user.getParameter("protocol");
+        String port = user.getParameter("port");
+
+        return routerService.configCreateAccessListExtend(routerName, id, permit, protocol, srcIp, srcMask, destIp,
+            destMask, "=", port);
+    }
+
+    @RequestMapping(value = "deleteList")
+    public String deleteList(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String id = user.getParameter("id");
+
+        return routerService.
+    }
+
+    @RequestMapping(value = "deleteTerm")
+    public String standard(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String id = user.getParameter("id");
+        String permit = user.getParameter("permit");
+        String ip = user.getParameter("ip");
+        String mask = user.getParameter("mask");
+
+        return routerService.
+    }
 }

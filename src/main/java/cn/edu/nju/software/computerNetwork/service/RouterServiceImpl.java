@@ -131,7 +131,7 @@ public class RouterServiceImpl implements RouterService {
             return "Router is not connected";
         }
         try {
-            return routers.get(routerName).showIpAccessList();
+            return routers.get(routerName).showIpAccessList().toString();
         } catch (Exception e) {
             return "IO error";
         }
@@ -149,5 +149,31 @@ public class RouterServiceImpl implements RouterService {
         }
     }
 
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String stdOrext, String number, String inOrout) {
+        if (!routers.containsKey(routerName)) {
+            return "Router is not connected";
+        }
+        try {
+            routers.get(routerName).configCancelAccessListGlobal(stdOrext, number, inOrout);
+        } catch (Exception e) {
+            return "IO error";
+        }
+        return "Success";
+    }
+
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String numberOrName, String stdOrext,
+        String permitOrDeny, String ipOrAny, String mask) {
+        if (!routers.containsKey(routerName)) {
+            return "Router is not connected";
+        }
+        try {
+            routers.get(routerName).configCancelAccessListGlobal(numberOrName, stdOrext, permitOrDeny, ipOrAny, mask);
+        } catch (Exception e) {
+            return "IO error";
+        }
+        return "Success";
+    }
 
 }
