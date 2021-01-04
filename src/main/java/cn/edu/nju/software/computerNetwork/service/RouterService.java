@@ -1,6 +1,8 @@
 package cn.edu.nju.software.computerNetwork.service;
 
-/**  
+import java.util.List;
+
+/**
  * @ClassName: IRouterService  
  *
  * @Description: TODO(这里用一句话描述这个类的作用)  
@@ -30,13 +32,16 @@ public interface RouterService {
 
     String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout);
 
-    String showIpAccessList(String routerName);
+    List<List<List<String>>> showIpAccessList(String routerName);
 
     String showIpInterface(String routerName);
 
-    String configCancelAccessListGlobal(String routerName, String stdOrext, String number, String inOrout);
+    String configCancelAccessListGlobal(String routerName, String stdOrext, String number);
 
-    String configCancelAccessListGlobal(String routerName, String numberOrName, String stdOrext, String permitOrDeny,
-        String ipOrAny, String mask);
+    String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String ipOrAny, String mask);
 
+    String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String protocol,
+        String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port);
+
+    String execute(String routerName, String command);
 }

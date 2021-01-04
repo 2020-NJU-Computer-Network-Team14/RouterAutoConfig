@@ -1,41 +1,119 @@
 let progress = $.AMUI.progress;
 
-$("#saveNum").click(function () {
+$("#saveStandard").click(function () {
     progress.start();
     $.ajax({
         type: "post",
-        url: "/",
+        url: "/standard",
         data: {
-            num: $("#num").val(),
-            permit: $("input[name='radioNum']:checked").val(),
-            ip: $("#ipNum").val(),
-            mask: $("#maskNum").val(),
-            protocol: $("#protocolNum").val(),
-            port: $("#portNum").val()
+            id: $("#idStandard").val(),
+            permit: $("input[name='radioStandard']:checked").val(),
+            ip: $("#ipStandard").val(),
+            mask: $("#maskStandard").val(),
+            router: $("title").html()
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 });
 
-$("#saveName").click(function () {
+$("#saveExtended").click(function () {
     progress.start();
     $.ajax({
         type: "post",
-        url: "/",
+        url: "/extend",
         data: {
-            name: $("#name").val(),
-            permit: $("input[name='radioNum']:checked").val(),
-            ip: $("#ipName").val(),
-            mask: $("#maskName").val(),
-            protocol: $("#protocolName").val(),
-            port: $("#portName").val()
+            id: $("#idExtended").val(),
+            permit: $("input[name='radioExtended']:checked").val(),
+            srcIp: $("#srcIpExtended").val(),
+            srcMask: $("#srcMaskExtended").val(),
+            destIp: $("#destIpExtended").val(),
+            destMask: $("#destMaskExtended").val(),
+            protocol: $("#protocol").val(),
+            port: $("#port").val(),
+            router: $("title").html()
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 });
+
+function deleteList(id, std) {
+    progress.start();
+    $.ajax({
+        type: "post",
+        url: "/deleteList",
+        data: {
+            id: id,
+            std: std,
+            router: $("title").html()
+        },
+        success: function (e) {
+            progress.done();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
+        }
+    });
+}
+
+function deleteStandardTerm(id) {
+    progress.start();
+    let i = id.slice(3, id.length)
+    $.ajax({
+        type: "post",
+        url: "/delStdTerm",
+        data: {
+            id: i.slice(0, i.indexOf("_")),
+            permit: $("#permit" + i).html(),
+            ip: $("#ip" + i).html(),
+            mask: $("#mask" + i).html(),
+            router: $("title").html()
+        },
+        success: function (e) {
+            progress.done();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
+        }
+    });
+}
+
+function deleteExtendedTerm(id, std) {
+    progress.start();
+    let i = id.slice(3, id.length)
+    $.ajax({
+        type: "post",
+        url: "/delExtTerm",
+        data: {
+            id: i.slice(0, i.indexOf("_")),
+            permit: $("#permit" + i).html(),
+            protocol: $("#protocol" + i).html(),
+            srcIp: $("#srcIp" + i).html(),
+            srcMask: $("#srcMask" + i).html(),
+            destIp: $("#destIp" + i).html(),
+            destMask: $("#destMask" + i).html(),
+            port: $("#port" + i).html(),
+            router: $("title").html()
+        },
+        success: function (e) {
+            progress.done();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
+        }
+    });
+}

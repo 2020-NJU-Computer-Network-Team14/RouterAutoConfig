@@ -9,7 +9,10 @@ $("#command").keypress(function(e) {
               router: $("title").html()
           },
           success: function (e) {
-              $("#output").append(e)
+              if (e === "路由器未连接！" || e === "未知IO异常……")
+                  alert(e);
+              else
+                $("#output").append(e)
           }
       });
       $("#command").val("")

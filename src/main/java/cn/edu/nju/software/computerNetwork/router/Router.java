@@ -242,13 +242,13 @@ public class Router {
 	/**
 	 * 取消某一整条
 	 */
-	public void configCancelAccessListGlobal(String stdOrext, String number, String inOrout) throws IOException {
+	public void configCancelAccessListGlobal(String stdOrext, String number) throws IOException {
 
 		String command;
 
 		inConfigureTerminal();
 
-		command = "no ip access-list " + stdOrext + " " + number + " " + inOrout;
+		command = "no ip access-list " + stdOrext + " " + number;
 		telnetService.executeWithoutRemove(command, promptInConfigureInterface());
 
 		end();
@@ -257,16 +257,53 @@ public class Router {
 	/**
 	 * 取消某一小条
 	 */
-	public void configCancelAccessListGlobal(String numberOrName, String stdOrext, String permitOrDeny, String ipOrAny,
+	public void configCancelAccessListGlobal(String numberOrName, String permitOrDeny, String ipOrAny,
 			String mask) throws IOException {
 
 		inConfigureTerminal();
 
-		String command = "ip access-list " + stdOrext + " " + numberOrName;
+		String command = "ip access-list standard " + numberOrName;
 		telnetService.executeWithoutRemove(command, promptInAcl());
 
 		command = "no " + permitOrDeny + " " + ipOrAny + " " + mask;
 		telnetService.executeWithoutRemove(command, promptInAcl());
+
+		end();
+	}
+
+	public void configCancelAccessListGlobal(String numberOrName, String permitOrDeny, String protocol, String sourceIp,
+		 	String sourceMask, String aimIp, String aimMask, String relation, String port) throws IOException {
+
+		inConfigureTerminal();
+
+		String command = "ip access-list extended " + numberOrName;
+		telnetService.executeWithoutRemove(command, promptInAcl());
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(permitOrDeny);
+		sb.append(" ");
+		sb.append(protocol);
+		sb.append(" ");
+		sb.append(sourceIp);
+		if (!"".equals(sourceMask)) {
+			sb.append(" ");
+			sb.append(sourceMask);
+		}
+		sb.append(" ");
+		sb.append(aimIp);
+		if (!"".equals(aimMask)) {
+			sb.append(" ");
+			sb.append(aimMask);
+		}
+		if (!"".equals(relation)) {
+			sb.append(" ");
+			sb.append(relation);
+		}
+		if (!"".equals(port)) {
+			sb.append(" ");
+			sb.append(port);
+		}
+		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
 
 		end();
 	}
@@ -321,4 +358,7 @@ public class Router {
 		return list;
 	}
 
+	public String execute(String command) throws IOException {
+		return telnetService.execute(command, Arrays.asList(">", "#"));
+	}
 }

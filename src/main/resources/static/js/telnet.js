@@ -12,7 +12,10 @@ $("#telnet").click(function () {
         },
         success: function (e) {
             progress.done();
-            window.location.href = "inter?router=" + $("#router").val();
+            if (e === "Success")
+                window.location.href = "inter?router=" + $("#router").val();
+            else
+                alert(e);
         }
     });
 });

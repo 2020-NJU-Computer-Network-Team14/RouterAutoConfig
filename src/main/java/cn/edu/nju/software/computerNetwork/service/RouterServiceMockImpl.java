@@ -2,6 +2,9 @@ package cn.edu.nju.software.computerNetwork.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**  
  * @ClassName: RouterServiceMockImpl  
  *
@@ -62,15 +65,105 @@ public class RouterServiceMockImpl implements RouterService {
     }
 
     @Override
-    public String showIpAccessList(String routerName) {
+    public List<List<List<String>>> showIpAccessList(String routerName) {
         System.out.println(routerName);
-        return "Success";
+        List<List<List<String>>> sss = new ArrayList<>();;
+        List<List<String>> ss = new ArrayList<>();;
+        List<String> s = new ArrayList<>();
+        s.add("Standard");
+        s.add("10");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("deny");
+        s.add("1.1.1.1");
+        s.add("0.0.0.1");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("permit");
+        s.add("any");
+        ss.add(s);
+        sss.add(ss);
+
+        ss = new ArrayList<>();
+        s = new ArrayList<>();
+        s.add("Extended");
+        s.add("aaa");
+        ss.add(s);
+        sss.add(ss);
+
+        ss = new ArrayList<>();
+        s = new ArrayList<>();
+        s.add("Extended");
+        s.add("110");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("deny");
+        s.add("icmp");
+        s.add("host");
+        s.add("2.2.2.2");
+        s.add("host");
+        s.add("3.3.3.3");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("deny");
+        s.add("icmp");
+        s.add("1.1.1.1");
+        s.add("0.0.0.255");
+        s.add("any");
+        s.add("eq");
+        s.add("telnet");
+        ss.add(s);
+        sss.add(ss);
+
+        ss = new ArrayList<>();
+        s = new ArrayList<>();
+        s.add("Standard");
+        s.add("test");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("deny");
+        s.add("1.1.1.1");
+        s.add("0.0.0.1");
+        ss.add(s);
+
+        s = new ArrayList<>();
+        s.add("permit");
+        s.add("any");
+        ss.add(s);
+        sss.add(ss);
+        return sss;
     }
 
     @Override
     public String showIpInterface(String routerName) {
         System.out.println(routerName);
         return "Success";
+    }
+
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String stdOrext, String number) {
+        return "Success";
+    }
+
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String ipOrAny, String mask) {
+        return "Success";
+    }
+
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
+               String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
+        return "Success";
+    }
+
+    @Override
+    public String execute(String routerName, String command) {
+        return "aaa";
     }
 
     @Override

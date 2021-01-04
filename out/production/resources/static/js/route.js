@@ -12,6 +12,10 @@ $("#confirm").click(function () {
         },
         success: function (e) {
             progress.done();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 });

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.edu.nju.software.computerNetwork.service.RouterService;
 
+import java.util.List;
+
 /**  
  * @ClassName: ConfigController  
  *
@@ -58,16 +60,27 @@ public class ConfigController {
         return routerService.configStaticRouting(routerName, ipPrefix, mask, nextHopIp);
     }
 
-    // @RequestMapping(value = "binding")
-    // public String binding(HttpServletRequest user) {
-    //
-    // String routerName = user.getParameter("router");
-    // String interfaceName = user.getParameter("interface");
-    // String inOrOut = user.getParameter("in");
-    // String aclName = user.getParameter("name");
-    //
-    // return routerService.configApplyAccessList(routerName, interfaceName, protocol, number, inOrOut);
-    // }
+    @RequestMapping(value = "binding")
+    public String binding(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String interfaceName = user.getParameter("interface");
+        String inOrOut = user.getParameter("in");
+        String aclName = user.getParameter("name");
+
+        return routerService.configApplyAccessList(routerName, interfaceName, aclName, inOrOut);
+    }
+
+    @RequestMapping(value = "noBinding")
+    public String noBinding(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String interfaceName = user.getParameter("interface");
+        String inOrOut = user.getParameter("in");
+        String aclName = user.getParameter("name");
+
+        return routerService.configCancelAccessList(routerName, interfaceName, aclName, inOrOut);
+    }
 
     @RequestMapping(value = "ping")
     public String ping(HttpServletRequest user) {
@@ -78,18 +91,17 @@ public class ConfigController {
         return routerService.ping(routerName, targetIp);
     }
 
-    // @RequestMapping(value = "command")
-    // public String command(HttpServletRequest user) {
-    //
-    //
-    // String router = user.getParameter("router");
-    // String command = user.getParameter("command");
-    //
-    // return routerService.
-    // }
+     @RequestMapping(value = "command")
+     public String command(HttpServletRequest user) {
+
+         String router = user.getParameter("router");
+         String command = user.getParameter("command");
+
+         return routerService.execute(router, command);
+     }
 
     @RequestMapping(value = "show_acl")
-    public String showAccessList(HttpServletRequest user) {
+    public List<List<List<String>>> showAccessList(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
 
@@ -141,12 +153,13 @@ public class ConfigController {
 
         String routerName = user.getParameter("router");
         String id = user.getParameter("id");
+        String std = user.getParameter("std");
 
-        return routerService.
+        return routerService.configCancelAccessListGlobal(routerName, id, std);
     }
 
-    @RequestMapping(value = "deleteTerm")
-    public String standard(HttpServletRequest user) {
+    @RequestMapping(value = "deleteStandardTerm")
+    public String deleteStandardTerm(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
         String id = user.getParameter("id");
@@ -154,6 +167,22 @@ public class ConfigController {
         String ip = user.getParameter("ip");
         String mask = user.getParameter("mask");
 
-        return routerService.
+        return routerService.configCancelAccessListGlobal(routerName, id, permit, ip, mask);
+    }
+
+    @RequestMapping(value = "deleteExtendedTerm")
+    public String deleteExtendedTerm(HttpServletRequest user) {
+
+        String routerName = user.getParameter("router");
+        String id = user.getParameter("id");
+        String permit = user.getParameter("permit");
+        String protocol = user.getParameter("protocol");
+        String srcIp = user.getParameter("srcIp");
+        String srcMask = user.getParameter("srcMask");
+        String destIp = user.getParameter("destIp");
+        String destMask = user.getParameter("destMask");
+        String port = user.getParameter("port");
+        return routerService.configCancelAccessListGlobal(routerName, id, permit, protocol, srcIp, srcMask, destIp,
+                destMask, "=", port);
     }
 }

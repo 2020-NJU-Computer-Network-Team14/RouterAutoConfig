@@ -10,6 +10,7 @@ $("#confirm").click(function () {
         },
         success: function (e) {
             progress.done();
+            alert(e);
         }
     });
 });

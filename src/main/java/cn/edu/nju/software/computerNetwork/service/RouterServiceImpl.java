@@ -1,6 +1,7 @@
 package cn.edu.nju.software.computerNetwork.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -32,13 +33,13 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public String configInterface(String routerName, String interfaceName, String ip, String mask) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configInterface(interfaceName, ip, mask);
         } catch (Exception e) {
             e.printStackTrace();
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
@@ -58,12 +59,12 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public String configStaticRouting(String routerName, String aimIp, String mask, String nextHopIp) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configStaticRouting(aimIp, mask, nextHopIp);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
@@ -72,12 +73,12 @@ public class RouterServiceImpl implements RouterService {
     public String configCreateAccessListStandard(String routerName, String number, String permitOrDeny, String ipOrAny,
         String mask) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configCreateAccessListStandard(number, permitOrDeny, ipOrAny, mask);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
@@ -87,13 +88,13 @@ public class RouterServiceImpl implements RouterService {
         String protocolOrPort, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation,
         String protocol) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configCreateAccessListExtend(number, permitOrDeny, protocolOrPort, sourceIp,
                 sourceMask, aimIp, aimMask, relation, protocol);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
@@ -101,12 +102,12 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public String configApplyAccessList(String routerName, String interfaceName, String number, String inOrout) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configApplyAccessList(interfaceName, number, inOrout);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
@@ -114,26 +115,26 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
             routers.get(routerName).configCancelAccessList(interfaceName, number, inOrout);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
 
 
     @Override
-    public String showIpAccessList(String routerName) {
+    public List<List<List<String>>> showIpAccessList(String routerName) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return null;
         }
         try {
-            return routers.get(routerName).showIpAccessList().toString();
+            return routers.get(routerName).showIpAccessList();
         } catch (Exception e) {
-            return "IO error";
+            return null;
         }
     }
 
@@ -150,30 +151,56 @@ public class RouterServiceImpl implements RouterService {
     }
 
     @Override
-    public String configCancelAccessListGlobal(String routerName, String stdOrext, String number, String inOrout) {
+    public String configCancelAccessListGlobal(String routerName, String stdOrext, String number) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
-            routers.get(routerName).configCancelAccessListGlobal(stdOrext, number, inOrout);
+            routers.get(routerName).configCancelAccessListGlobal(stdOrext, number);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
 
     @Override
-    public String configCancelAccessListGlobal(String routerName, String numberOrName, String stdOrext,
-        String permitOrDeny, String ipOrAny, String mask) {
+    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
+               String ipOrAny, String mask) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return "路由器未连接！";
         }
         try {
-            routers.get(routerName).configCancelAccessListGlobal(numberOrName, stdOrext, permitOrDeny, ipOrAny, mask);
+            routers.get(routerName).configCancelAccessListGlobal(numberOrName, permitOrDeny, ipOrAny, mask);
         } catch (Exception e) {
-            return "IO error";
+            return "未知IO异常……";
         }
         return "Success";
     }
 
+    @Override
+    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
+                String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
+        if (!routers.containsKey(routerName)) {
+            return "路由器未连接！";
+        }
+        try {
+            routers.get(routerName).configCancelAccessListGlobal(numberOrName, permitOrDeny, protocol, sourceIp,
+                sourceMask, aimIp, aimMask, relation, port);
+        } catch (Exception e) {
+            return "未知IO异常……";
+        }
+        return "Success";
+    }
+
+    @Override
+    public String execute(String routerName, String command) {
+        if (!routers.containsKey(routerName)) {
+            return "路由器未连接！";
+        }
+        try {
+            return routers.get(routerName).execute(command);
+        } catch (Exception e) {
+            return "未知IO异常……";
+        }
+    }
 }

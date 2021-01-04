@@ -14,7 +14,10 @@ $("#saveStandard").click(function () {
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 });
@@ -37,23 +40,30 @@ $("#saveExtended").click(function () {
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 });
 
-function deleteList(id) {
+function deleteList(id, std) {
     progress.start();
     $.ajax({
         type: "post",
         url: "/deleteList",
         data: {
             id: id,
+            std: std,
             router: $("title").html()
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 }
@@ -73,12 +83,15 @@ function deleteStandardTerm(id) {
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 }
 
-function deleteExtendedTerm(id) {
+function deleteExtendedTerm(id, std) {
     progress.start();
     let i = id.slice(3, id.length)
     $.ajax({
@@ -87,19 +100,20 @@ function deleteExtendedTerm(id) {
         data: {
             id: i.slice(0, i.indexOf("_")),
             permit: $("#permit" + i).html(),
-            ip: $("#ip" + i).html(),
-            mask: $("#mask" + i).html(),
+            protocol: $("#protocol" + i).html(),
             srcIp: $("#srcIp" + i).html(),
             srcMask: $("#srcMask" + i).html(),
             destIp: $("#destIp" + i).html(),
             destMask: $("#destMask" + i).html(),
-            protocol: $("#protocol" + i).html(),
             port: $("#port" + i).html(),
             router: $("title").html()
         },
         success: function (e) {
             progress.done();
-            window.location.reload();
+            if (e === "Success")
+                window.location.reload();
+            else
+                alert(e);
         }
     });
 }
