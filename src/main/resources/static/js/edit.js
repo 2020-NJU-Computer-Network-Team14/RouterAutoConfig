@@ -1,6 +1,6 @@
 let progress = $.AMUI.progress;
 
-$("#saveStandard").click(function () {
+function saveStandard() {
     progress.start();
     $.ajax({
         type: "post",
@@ -20,7 +20,7 @@ $("#saveStandard").click(function () {
                 alert(e);
         }
     });
-});
+}
 
 $("#saveExtended").click(function () {
     progress.start();

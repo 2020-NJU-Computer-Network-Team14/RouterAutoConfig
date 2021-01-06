@@ -1,3 +1,6 @@
+let u = window.location.href;
+$("title").html(u.slice(u.indexOf("=") + 1));
+
 $.ajax({
     type : "post",
     url : "/show_acl",
@@ -5,6 +8,7 @@ $.ajax({
         router: $("title").html()
     },
     success : function(aclList) {
+        alert(aclList)
         if (aclList === "null")
             alert("路由器未连接或出现未知IO异常……");
         else {
@@ -79,7 +83,7 @@ $.ajax({
                 "<label class='am-radio-inline' style='font-size: 20px'>" +
                 "<input type='radio' name='radioStandard' value='deny' style='width: 20px; height: 20px'>&nbsp;禁止</label>" +
                 "</div><div class='am-u-lg-3'>" +
-                "<button id='saveStandard' type='button' class='am-btn am-btn-secondary'>保存</button>" +
+                "<button id='saveStandard' type='button' class='am-btn am-btn-secondary' onclick='saveStandard()'>保存</button>" +
                 "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
                 "<input id='ipStandard' type='text' class='am-form-field' placeholder='IP'></div><div class='am-u-lg-6'>" +
                 "<input id='maskStandard' type='text' class='am-form-field' placeholder='反掩码'>" +

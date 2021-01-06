@@ -32,7 +32,7 @@ public interface RouterService {
 
     String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout);
 
-    List<List<List<String>>> showIpAccessList(String routerName);
+    String showIpAccessList(String routerName);
 
     String showIpInterface(String routerName);
 

@@ -19,7 +19,7 @@ import cn.edu.nju.software.computerNetwork.router.Router;
  *  
  */
 
-@Service
+@Service("test-route-service")
 public class RouterServiceImpl implements RouterService {
 
     private Map<String, Router> routers = new HashMap<>();
@@ -127,7 +127,7 @@ public class RouterServiceImpl implements RouterService {
 
 
     @Override
-    public List<List<List<String>>> showIpAccessList(String routerName) {
+    public String showIpAccessList(String routerName) {
         if (!routers.containsKey(routerName)) {
             return null;
         }

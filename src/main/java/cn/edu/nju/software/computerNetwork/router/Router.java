@@ -68,6 +68,7 @@ public class Router {
 	public String connect(String ip, int port, String telnetPassword, String enablePassword) {
 		if (telnetService != null) {
 			return "路由器telnet已经处于连接状态，无需重新连接";
+			//return "Success";
 		}
 		try {
 			telnetService = new TelnetService();
@@ -174,7 +175,7 @@ public class Router {
 
 		inConfigureTerminal();
 
-		String command = "ip access-list standard" + numberOrName;
+		String command = "ip access-list standard " + numberOrName;
 		telnetService.executeWithoutRemove(command, promptInAcl());
 
 		command = permitOrDeny + " " + ipOrAny + " " + mask;
@@ -323,10 +324,10 @@ public class Router {
 		end();
 	}
 
-	public List<List<List<String>>> showIpAccessList() throws IOException {
+	public String showIpAccessList() throws IOException {
 		String command = "show ip access-list";
 		String msg = telnetService.execute(command, promptInEnable());
-		String[] lines = msg.split("\n");
+/*		String[] lines = msg.split("\n");
 		List<List<List<String>>> ret = new LinkedList<>();
 		for (int i = 0; i < lines.length; i++) {
 			if (lines[i].contains("access list")) {
@@ -348,8 +349,8 @@ public class Router {
 				}
 				ret.get(ret.size() - 1).add(temp);
 			}
-		}
-		return ret;
+		}*/
+		return msg;
 	}
 
 	public String showIpInterface() throws IOException {
@@ -359,6 +360,6 @@ public class Router {
 	}
 
 	public String execute(String command) throws IOException {
-		return telnetService.execute(command, Arrays.asList(">", "#"));
+		return telnetService.executeAndGetPrompt(command, Arrays.asList(">", "#"));
 	}
 }

@@ -101,7 +101,7 @@ public class ConfigController {
      }
 
     @RequestMapping(value = "show_acl")
-    public List<List<List<String>>> showAccessList(HttpServletRequest user) {
+    public String showAccessList(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
 

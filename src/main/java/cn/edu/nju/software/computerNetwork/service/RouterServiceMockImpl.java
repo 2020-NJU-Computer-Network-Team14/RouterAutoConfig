@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2020年12月25日  
  *  
  */
-@Service("test-route-service")
+
 public class RouterServiceMockImpl implements RouterService {
 
     @Override
@@ -65,8 +65,8 @@ public class RouterServiceMockImpl implements RouterService {
     }
 
     @Override
-    public List<List<List<String>>> showIpAccessList(String routerName) {
-        System.out.println(routerName);
+    public String showIpAccessList(String routerName) {
+       /* System.out.println(routerName);
         List<List<List<String>>> sss = new ArrayList<>();;
         List<List<String>> ss = new ArrayList<>();;
         List<String> s = new ArrayList<>();
@@ -135,8 +135,8 @@ public class RouterServiceMockImpl implements RouterService {
         s.add("permit");
         s.add("any");
         ss.add(s);
-        sss.add(ss);
-        return sss;
+        sss.add(ss);*/
+        return "";
     }
 
     @Override
