@@ -115,8 +115,8 @@ public class TelnetService implements AutoCloseable {
     }
 
     private String removeInput(String buf) {
-        int high = lastLine(buf);
-        return buf.substring(0, high);
+        int low = firstLine(buf);
+        return buf.substring(low);
     }
 
     private int lastLine(String buf) {
