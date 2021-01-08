@@ -1,75 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>连接</title>
-        <link rel="icon" type="image/png" href="/i/favicon.jpg">
-        <link rel="stylesheet" href="/css/amazeui.min.css">
-        <link rel="stylesheet" href="/css/app.css">
-        <script src="/js/amaze/jquery-3.3.1.js"></script>
-        <script src="/js/amaze/amazeui.min.js"></script>
-        <style>
-            .router1 {
-                display: inline-block;
-                width: 49%;
-                height: 400px;
-                /*background-color: pink;*/
-                text-align: center;
-            }
-            .login {
-                display: inline-block;
-                font-size: 20px;
-                width: 50%;
-                margin: 100px auto;
-                text-align: center;
-            }
-            .router1-1 {
-                display: inline-block;
-                width: 22%;
-                height: 400px;
-                /*background-color: green;*/
-                background-image: url("/image/router.png");
-                background-position: center;
-                background-repeat: no-repeat;
-                vertical-align: top;
-                text-align: center;
-                padding-top: 280px;
-            }
-            .router1-2 {
-                display: inline-block;
-                width: 15%;
-                height: 400px;
-                /*background-color: yellow;*/
-                background-image: url("/image/line.png");
-                background-position: center;
-                background-repeat: no-repeat
-            }
-        </style>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>连接</title>
+    <link rel="icon" type="image/png" href="/i/favicon.jpg">
+    <link rel="stylesheet" href="/css/amazeui.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <script src="/js/amaze/jquery-3.3.1.js"></script>
+    <script src="/js/amaze/amazeui.min.js"></script>
+    <style>
+        .router1 {
+            position: relative;
+            float: left;
+            display: inline-block;
+            width: 60%;
+            height: 700px;
+            margin-left: 10px;
+            margin-top: 20px;
+            background-image: url("/image/tuopu.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            text-align: center;
+        }
+        .login {
+            display: inline-block;
+            font-size: 20px;
+            width: 39%;
+            height: 600px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        .hide1 {
+            position: absolute;
+            left: 31px;
+            top: 68px;
+            width: 168px;
+            height: 122px;
+            border-radius: 39%;
+        }
+        .hide2 {
+            position: absolute;
+            left: 340px;
+            top: 73px;
+            width: 168px;
+            height: 121px;
+            border-radius: 39%;
+        }
+        .hide3 {
+            position: absolute;
+            left: 669px;
+            top: 76px;
+            width: 170px;
+            height: 121px;
+            border-radius: 39%;
+        }
+        .hide1:hover {
+            background-color: rgb(0,255,0,0.8);
+        }
+        .hide2:hover {
+            background-color: rgb(0,255,0,0.7);
+        }
+        .hide3:hover {
+            background-color: rgb(0,255,0,0.7);
+        }
+    </style>
+</head>
 
-    <body>
-    <div class="router1">
-        <div class="router1-1"><button  type="button" class="am-btn am-btn-secondary" style="font-size: 15px" onclick="showInfo1();">连接</button></div>
-        <div class="router1-2"></div>
-        <div class="router1-1"><button  type="button" class="am-btn am-btn-secondary" style="font-size: 15px" onclick="showInfo2();">连接</button></div>
-        <div class="router1-2"></div>
-        <div class="router1-1"><button  type="button" class="am-btn am-btn-secondary" style="font-size: 15px" onclick="showInfo3();">连接</button></div>
-    </div>
-        <div class="login">
-            <h1>通过Telnet连接到控制端</h1>
-            <br>
-            <input id="ip" type="text" class="am-form-field" placeholder="IP" style="width: 50%; margin: auto; font-size: 20px">
-            <br>
-            <input id="password" type="password" class="am-form-field" placeholder="telnet密码" style="width: 50%; margin: auto; font-size: 20px">
-            <br>
-            <input id="enable" type="password" class="am-form-field" placeholder="enable密码" style="width: 50%; margin: auto; font-size: 20px">
-            <br>
-            <input id="router" type="text" class="am-form-field" placeholder="路由器名" style="width: 50%; margin: auto; font-size: 20px">
-            <br>
-            <button id="telnet" type="button" class="am-btn am-btn-secondary" style="font-size: 15px">连接</button>
-        </div>
-        <script src="/js/telnet.js"></script>
-    </body>
+<body>
+<div class="router1">
+    <div class="hide1" onclick="showInfo1();"></div>
+    <div class="hide2" onclick="showInfo2();"></div>
+    <div class="hide3" onclick="showInfo3();"></div>
+</div>
+<div class="login">
+    <h1 style="margin-top: 10px">通过Telnet连接到控制端</h1>
+    <br>
+    <input id="ip" type="text" class="am-form-field" placeholder="IP" style="width: 50%; margin: auto; font-size: 20px">
+    <br>
+    <input id="password" type="password" class="am-form-field" placeholder="telnet密码" style="width: 50%; margin: auto; font-size: 20px">
+    <br>
+    <input id="enable" type="password" class="am-form-field" placeholder="enable密码" style="width: 50%; margin: auto; font-size: 20px">
+    <br>
+    <input id="router" type="text" class="am-form-field" placeholder="路由器名" style="width: 50%; margin: auto; font-size: 20px">
+    <br>
+    <button id="telnet" type="button" class="am-btn am-btn-secondary" style="font-size: 15px">连接</button>
+</div>
+<script src="/js/telnet.js"></script>
+</body>
 <script>
     function showInfo1() {
         $("#ip").val("192.168.10.3");
