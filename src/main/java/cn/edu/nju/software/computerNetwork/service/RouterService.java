@@ -32,16 +32,16 @@ public interface RouterService {
 
     String configCancelAccessList(String routerName, String interfaceName, String number, String inOrout);
 
-    String showIpAccessList(String routerName);
+    List<List<String>> showIpAccessList(String routerName);
 
     String showIpInterface(String routerName);
 
     String configCancelAccessListGlobal(String routerName, String stdOrext, String number);
 
-    String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String ipOrAny, String mask);
+    String configCancelAccessListGlobal(String routerName, String id, String std, String term);
 
-    String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String protocol,
-        String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port);
+//    String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String protocol,
+//        String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port);
 
     String execute(String routerName, String command);
 }

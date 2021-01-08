@@ -6,7 +6,7 @@ $("#add").click(function () {
         url: "/binding",
         data: {
             interface: $("#interface").val(),
-            in: $("input[name='radioNum']:checked").val(),
+            in: $("input[name='inOut']:checked").val(),
             name: $("#name").val(),
             router: $("title").html()
         },
@@ -28,7 +28,7 @@ $("#remove").click(function () {
         url: "/noBinding",
         data: {
             interface: $("#interface").val(),
-            in: $("input[name='radioNum']:checked").val(),
+            in: $("input[name='inOut']:checked").val(),
             name: $("#name").val(),
             router: $("title").html()
         },

@@ -68,7 +68,7 @@ public class Router {
 	public String connect(String ip, int port, String telnetPassword, String enablePassword) {
 		if (telnetService != null) {
 			return "路由器telnet已经处于连接状态，无需重新连接";
-			//return "Success";
+			// return "Success";
 		}
 		try {
 			telnetService = new TelnetService();
@@ -258,53 +258,68 @@ public class Router {
 	/**
 	 * 取消某一小条
 	 */
-	public void configCancelAccessListGlobal(String numberOrName, String permitOrDeny, String ipOrAny,
-			String mask) throws IOException {
+	// public void configCancelAccessListGlobal(String numberOrName, String
+	// permitOrDeny, String ipOrAny,
+	// String mask) throws IOException {
+	//
+	// inConfigureTerminal();
+	//
+	// String command = "ip access-list standard " + numberOrName;
+	// telnetService.executeWithoutRemove(command, promptInAcl());
+	//
+	// command = "no " + permitOrDeny + " " + ipOrAny + " " + mask;
+	// telnetService.executeWithoutRemove(command, promptInAcl());
+	//
+	// end();
+	// }
+
+	// public void configCancelAccessListGlobal(String numberOrName, String
+	// permitOrDeny, String protocol, String sourceIp,
+	// String sourceMask, String aimIp, String aimMask, String relation, String
+	// port) throws IOException {
+	//
+	// inConfigureTerminal();
+	//
+	// String command = "ip access-list extended " + numberOrName;
+	// telnetService.executeWithoutRemove(command, promptInAcl());
+	//
+	// StringBuilder sb = new StringBuilder();
+	// sb.append(permitOrDeny);
+	// sb.append(" ");
+	// sb.append(protocol);
+	// sb.append(" ");
+	// sb.append(sourceIp);
+	// if (!"".equals(sourceMask)) {
+	// sb.append(" ");
+	// sb.append(sourceMask);
+	// }
+	// sb.append(" ");
+	// sb.append(aimIp);
+	// if (!"".equals(aimMask)) {
+	// sb.append(" ");
+	// sb.append(aimMask);
+	// }
+	// if (!"".equals(relation)) {
+	// sb.append(" ");
+	// sb.append(relation);
+	// }
+	// if (!"".equals(port)) {
+	// sb.append(" ");
+	// sb.append(port);
+	// }
+	// telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+	//
+	// end();
+	// }
+
+	public void configCancelAccessListGlobal(String id, String std, String term) throws IOException {
 
 		inConfigureTerminal();
 
-		String command = "ip access-list standard " + numberOrName;
+		String command = "ip access-list " + std + " " + id;
 		telnetService.executeWithoutRemove(command, promptInAcl());
 
-		command = "no " + permitOrDeny + " " + ipOrAny + " " + mask;
-		telnetService.executeWithoutRemove(command, promptInAcl());
-
-		end();
-	}
-
-	public void configCancelAccessListGlobal(String numberOrName, String permitOrDeny, String protocol, String sourceIp,
-		 	String sourceMask, String aimIp, String aimMask, String relation, String port) throws IOException {
-
-		inConfigureTerminal();
-
-		String command = "ip access-list extended " + numberOrName;
-		telnetService.executeWithoutRemove(command, promptInAcl());
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(permitOrDeny);
-		sb.append(" ");
-		sb.append(protocol);
-		sb.append(" ");
-		sb.append(sourceIp);
-		if (!"".equals(sourceMask)) {
-			sb.append(" ");
-			sb.append(sourceMask);
-		}
-		sb.append(" ");
-		sb.append(aimIp);
-		if (!"".equals(aimMask)) {
-			sb.append(" ");
-			sb.append(aimMask);
-		}
-		if (!"".equals(relation)) {
-			sb.append(" ");
-			sb.append(relation);
-		}
-		if (!"".equals(port)) {
-			sb.append(" ");
-			sb.append(port);
-		}
-		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+		telnetService.executeWithoutRemove("no " + term, promptInAcl());
 
 		end();
 	}
@@ -324,33 +339,18 @@ public class Router {
 		end();
 	}
 
-	public String showIpAccessList() throws IOException {
+	public List<List<String>> showIpAccessList() throws IOException {
 		String command = "show ip access-list";
 		String msg = telnetService.execute(command, promptInEnable());
-/*		String[] lines = msg.split("\n");
-		List<List<List<String>>> ret = new LinkedList<>();
+
+		String[] lines = msg.split("\n");
+		List<List<String>> ret = new LinkedList<>();
 		for (int i = 0; i < lines.length; i++) {
-			if (lines[i].contains("access list")) {
-				ret.add(new LinkedList<List<String>>());
-				LinkedList<String> temp = new LinkedList<>();
-				if (lines[i].contains("Standard"))
-					temp.add("Standard");
-				else
-					temp.add("Extended");
-				int pos = lines[i].indexOf("access list");
-				temp.add(lines[i].substring(pos + "access list ".length(), lines[i].length()));
-				ret.get(ret.size() - 1).add(temp);
-			} else {
-				String[] words = lines[i].split(" ");
-				LinkedList<String> temp = new LinkedList<>();
-				for (String s : words) {
-					if (s.length() > 0)
-						temp.add(s);
-				}
-				ret.get(ret.size() - 1).add(temp);
-			}
-		}*/
-		return msg;
+			if (lines[i].contains("access list"))
+				ret.add(new LinkedList<String>());
+			ret.get(ret.size() - 1).add(lines[i].trim());
+		}
+		return ret;
 	}
 
 	public String showIpInterface() throws IOException {

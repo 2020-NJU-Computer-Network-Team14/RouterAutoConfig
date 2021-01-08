@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2020年12月25日  
  *  
  */
-
+@Service("test-route-service")
 public class RouterServiceMockImpl implements RouterService {
 
     @Override
@@ -65,78 +65,31 @@ public class RouterServiceMockImpl implements RouterService {
     }
 
     @Override
-    public String showIpAccessList(String routerName) {
-       /* System.out.println(routerName);
-        List<List<List<String>>> sss = new ArrayList<>();;
+    public List<List<String>> showIpAccessList(String routerName) {
+        System.out.println(routerName);
         List<List<String>> ss = new ArrayList<>();;
         List<String> s = new ArrayList<>();
-        s.add("Standard");
-        s.add("10");
+        s.add("Standard IP access list 10");
+        s.add("deny 1.1.1.1 0.0.0.1");
+        s.add("permit any");
         ss.add(s);
 
         s = new ArrayList<>();
-        s.add("deny");
-        s.add("1.1.1.1");
-        s.add("0.0.0.1");
+        s.add("Extended IP access list aaa");
         ss.add(s);
 
         s = new ArrayList<>();
-        s.add("permit");
-        s.add("any");
-        ss.add(s);
-        sss.add(ss);
-
-        ss = new ArrayList<>();
-        s = new ArrayList<>();
-        s.add("Extended");
-        s.add("aaa");
-        ss.add(s);
-        sss.add(ss);
-
-        ss = new ArrayList<>();
-        s = new ArrayList<>();
-        s.add("Extended");
-        s.add("110");
+        s.add("Extended IP access list 110");
+        s.add("deny icmp host 2.2.2.2 host 3.3.3.3");
+        s.add("deny icmp 1.1.1.1 0.0.0.255 any eq telnet");
         ss.add(s);
 
         s = new ArrayList<>();
-        s.add("deny");
-        s.add("icmp");
-        s.add("host");
-        s.add("2.2.2.2");
-        s.add("host");
-        s.add("3.3.3.3");
+        s.add("Standard IP access list test");
+        s.add("deny 1.1.1.1 0.0.0.1");
+        s.add("permit any");
         ss.add(s);
-
-        s = new ArrayList<>();
-        s.add("deny");
-        s.add("icmp");
-        s.add("1.1.1.1");
-        s.add("0.0.0.255");
-        s.add("any");
-        s.add("eq");
-        s.add("telnet");
-        ss.add(s);
-        sss.add(ss);
-
-        ss = new ArrayList<>();
-        s = new ArrayList<>();
-        s.add("Standard");
-        s.add("test");
-        ss.add(s);
-
-        s = new ArrayList<>();
-        s.add("deny");
-        s.add("1.1.1.1");
-        s.add("0.0.0.1");
-        ss.add(s);
-
-        s = new ArrayList<>();
-        s.add("permit");
-        s.add("any");
-        ss.add(s);
-        sss.add(ss);*/
-        return "";
+        return ss;
     }
 
     @Override
@@ -147,19 +100,21 @@ public class RouterServiceMockImpl implements RouterService {
 
     @Override
     public String configCancelAccessListGlobal(String routerName, String stdOrext, String number) {
+        System.out.println(routerName + " " + stdOrext + " " + number);
         return "Success";
     }
 
     @Override
-    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny, String ipOrAny, String mask) {
+    public String configCancelAccessListGlobal(String routerName, String id, String std, String term) {
+        System.out.println(routerName + " " + id + " " + std + " " + term);
         return "Success";
     }
 
-    @Override
-    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
-               String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
-        return "Success";
-    }
+//    @Override
+//    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
+//               String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
+//        return "Success";
+//    }
 
     @Override
     public String execute(String routerName, String command) {

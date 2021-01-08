@@ -12,7 +12,7 @@ $("#telnet").click(function () {
         },
         success: function (e) {
             progress.done();
-            if (e === "Success")
+            if (e === "Success"||e ==="路由器telnet已经处于连接状态，无需重新连接")
                 window.location.href = "inter?router=" + $("#router").val();
             else
                 alert(e);
