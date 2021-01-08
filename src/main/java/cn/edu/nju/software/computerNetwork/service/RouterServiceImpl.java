@@ -19,7 +19,7 @@ import cn.edu.nju.software.computerNetwork.router.Router;
  *  
  */
 
-@Service("test-route-service")
+@Service
 public class RouterServiceImpl implements RouterService {
 
     private Map<String, Router> routers = new HashMap<>();
@@ -127,7 +127,7 @@ public class RouterServiceImpl implements RouterService {
 
 
     @Override
-    public String showIpAccessList(String routerName) {
+    public List<List<String>> showIpAccessList(String routerName) {
         if (!routers.containsKey(routerName)) {
             return null;
         }
@@ -164,33 +164,32 @@ public class RouterServiceImpl implements RouterService {
     }
 
     @Override
-    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
-               String ipOrAny, String mask) {
+    public String configCancelAccessListGlobal(String routerName, String id, String std, String term) {
         if (!routers.containsKey(routerName)) {
             return "路由器未连接！";
         }
         try {
-            routers.get(routerName).configCancelAccessListGlobal(numberOrName, permitOrDeny, ipOrAny, mask);
+            routers.get(routerName).configCancelAccessListGlobal(id, std, term);
         } catch (Exception e) {
             return "未知IO异常……";
         }
         return "Success";
     }
 
-    @Override
-    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
-                String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
-        if (!routers.containsKey(routerName)) {
-            return "路由器未连接！";
-        }
-        try {
-            routers.get(routerName).configCancelAccessListGlobal(numberOrName, permitOrDeny, protocol, sourceIp,
-                sourceMask, aimIp, aimMask, relation, port);
-        } catch (Exception e) {
-            return "未知IO异常……";
-        }
-        return "Success";
-    }
+//    @Override
+//    public String configCancelAccessListGlobal(String routerName, String numberOrName, String permitOrDeny,
+//                String protocol, String sourceIp, String sourceMask, String aimIp, String aimMask, String relation, String port) {
+//        if (!routers.containsKey(routerName)) {
+//            return "路由器未连接！";
+//        }
+//        try {
+//            routers.get(routerName).configCancelAccessListGlobal(numberOrName, permitOrDeny, protocol, sourceIp,
+//                sourceMask, aimIp, aimMask, relation, port);
+//        } catch (Exception e) {
+//            return "未知IO异常……";
+//        }
+//        return "Success";
+//    }
 
     @Override
     public String execute(String routerName, String command) {

@@ -22,7 +22,7 @@ function saveStandard() {
     });
 }
 
-$("#saveExtended").click(function () {
+function saveExtended() {
     progress.start();
     $.ajax({
         type: "post",
@@ -46,7 +46,7 @@ $("#saveExtended").click(function () {
                 alert(e);
         }
     });
-});
+}
 
 function deleteList(id, std) {
     progress.start();
@@ -68,17 +68,16 @@ function deleteList(id, std) {
     });
 }
 
-function deleteStandardTerm(id) {
+function deleteTerm(id, std) {
     progress.start();
     let i = id.slice(3, id.length)
     $.ajax({
         type: "post",
-        url: "/delStdTerm",
+        url: "/deleteTerm",
         data: {
             id: i.slice(0, i.indexOf("_")),
-            permit: $("#permit" + i).html(),
-            ip: $("#ip" + i).html(),
-            mask: $("#mask" + i).html(),
+            std: std,
+            term: $("#term" + i).html(),
             router: $("title").html()
         },
         success: function (e) {
@@ -91,29 +90,29 @@ function deleteStandardTerm(id) {
     });
 }
 
-function deleteExtendedTerm(id, std) {
-    progress.start();
-    let i = id.slice(3, id.length)
-    $.ajax({
-        type: "post",
-        url: "/delExtTerm",
-        data: {
-            id: i.slice(0, i.indexOf("_")),
-            permit: $("#permit" + i).html(),
-            protocol: $("#protocol" + i).html(),
-            srcIp: $("#srcIp" + i).html(),
-            srcMask: $("#srcMask" + i).html(),
-            destIp: $("#destIp" + i).html(),
-            destMask: $("#destMask" + i).html(),
-            port: $("#port" + i).html(),
-            router: $("title").html()
-        },
-        success: function (e) {
-            progress.done();
-            if (e === "Success")
-                window.location.reload();
-            else
-                alert(e);
-        }
-    });
-}
+// function deleteExtendedTerm(id, std) {
+//     progress.start();
+//     let i = id.slice(3, id.length)
+//     $.ajax({
+//         type: "post",
+//         url: "/delExtTerm",
+//         data: {
+//             id: i.slice(0, i.indexOf("_")),
+//             permit: $("#permit" + i).html(),
+//             protocol: $("#protocol" + i).html(),
+//             srcIp: $("#srcIp" + i).html(),
+//             srcMask: $("#srcMask" + i).html(),
+//             destIp: $("#destIp" + i).html(),
+//             destMask: $("#destMask" + i).html(),
+//             port: $("#port" + i).html(),
+//             router: $("title").html()
+//         },
+//         success: function (e) {
+//             progress.done();
+//             if (e === "Success")
+//                 window.location.reload();
+//             else
+//                 alert(e);
+//         }
+//     });
+// }

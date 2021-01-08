@@ -1,3 +1,6 @@
+let u = window.location.href;
+$("title").html(u.slice(u.indexOf("=") + 1));
+
 $.ajax({
     type : "post",
     url : "/show_acl",
@@ -8,63 +11,30 @@ $.ajax({
         if (aclList === "null")
             alert("路由器未连接或出现未知IO异常……");
         else {
-            let std = "", ext = "", s, index;
+            let std = "", ext = "", ss, s;
             for (let acl of aclList) {
-                 s = "<div class='am-panel-group' id='acl" + acl[0] + "'>" +
-                            "<div class='am-panel am-panel-default'><div class='am-panel-hd am-g'>" +
-                                    "<h4 class='am-panel-title am-u-lg-3'" +
-                                        "data-am-collapse=\"{parent: '#acl" + acl[0][1] +
-                                        "', target: '#list" + acl[0][1] + "'}\">" + acl[0][1] + "</h4>" +
-                                    "<button id='del1' type='button' class='am-btn-sm am-btn-warning am-u-lg-2'" +
-                                            "onclick='deleteList(id, acl[0][0])'>删除</button></div>" +
-                                "<div id='list" + acl[0][1] + "' class='am-panel-collapse am-collapse'>" +
-                                    "<div class='am-panel-bd'><table class='am-table'>";
-                if (acl[0][0] === "Standard") {
-                    s += "<tr><td>允许/禁止</td><td>IP</td><td>反掩码</td></tr>";
-                    for (let i = 1; i < acl.length; i++) {
-                        s += "<tr><td id='permit" + acl[0][1] + "_" + i + "'>" + acl[i][0] + "</td>" +
-                                 "<td id='id" + acl[0][1] + "_" + i + "'>" + acl[i][1] + "</td>" +
-                                 "<td id='mask" + acl[0][1] + "_" + i + "'>" + (acl[i][1] === "any" ? "" : acl[i][2]) + "</td>" +
-                                 "<td><button id='del" + acl[0][1] + "_" + i + "' type='button'" +
-                                             "class='am-btn-sm am-btn-warning' onclick='deleteStandardTerm(id)'>删除</button></td></tr>";
-                    }
-                    s += "</table></div></div></div></div>";
+                ss = acl[0].split(" ");
+                s = "<div class='am-panel-group' id='acl" + ss[4] + "'>" +
+                        "<div class='am-panel am-panel-default'><div class='am-panel-hd am-g'>" +
+                            "<h4 class='am-panel-title am-u-lg-3'" +
+                                "data-am-collapse=\"{parent: '#acl" + ss[4] +
+                                "', target: '#list" + ss[4] + "'}\">" + ss[4] + "</h4>" +
+                            "<button id='del" + ss[4] + "' type='button' class='am-btn-sm am-btn-warning am-u-lg-2'" +
+                                    "onclick=\"deleteList('" + ss[4] + "', '" + ss[0] + "')\">删除</button></div>" +
+                        "<div id='list" + ss[4] + "' class='am-panel-collapse am-collapse'>" +
+                            "<div class='am-panel-bd'><ul class='am-list'>";
+                if (ss[0] === "Standard") {
+                    for (let i = 1; i < acl.length; i++)
+                        s += "<li><p id='term" + ss[4] + "_" + i + "'>" + acl[i] + "</p><button id='del" + ss[4] + "_" + i + "' type='button'" +
+                             "class='am-btn-sm am-btn-warning' onclick=\"deleteTerm(id, 'standard')\">删除</button></li>";
+                    s += "</ul></div></div></div></div>";
                     std += s;
                 }
                 else {
-                    s += "<tr><td>允许/禁止</td><td>协议</td><td>源IP</td><td>源反掩码</td><td>目的IP</td>" +
-                         "<td>目的反掩码</td><td>端口</td></tr>";
-                    for (let i = 1; i < acl.length; i++) {
-                        index = 0;
-                        s += "<tr><td id='permit" + acl[0][1] + "_" + i + "'>" + acl[i][index++] + "</td>" +
-                                 "<td id='protocol" + acl[0][1] + "_" + i + "'>" + acl[i][index++] + "</td>" +
-                                 "<td id='srcId" + acl[0][1] + "_" + i + "'>";
-                        if (acl[i][index] === "host") {
-                            s += acl[i][++index] + "</td><td id='srcMask" + acl[0][1] + "_" + i + "'>0.0.0.0</td>";
-                            index++;
-                        }
-                        else if (acl[i][index] === "any") {
-                            s += "any</td><td id='srcMask" + acl[0][1] + "_" + i + "'></td>";
-                            index++;
-                        }
-                        else
-                            s += acl[i][index++] + "</td><td id='srcMask" + acl[0][1] + "_" + i + "'>" + acl[i][index++] + "</td>";
-                        s += "<td id='destId" + acl[0][1] + "_" + i + "'>";
-                        if (acl[i][index] === "host") {
-                            s += acl[i][++index] + "</td><td id='destMask" + acl[0][1] + "_" + i + "'>0.0.0.0</td>";
-                            index++;
-                        }
-                        else if (acl[i][index] === "any") {
-                            s += "any</td><td id='destMask" + acl[0][1] + "_" + i + "'></td>";
-                            index++;
-                        }
-                        else
-                            s += acl[i][index++] + "</td><td id='destMask" + acl[0][1] + "_" + i + "'>" + acl[i][index++] + "</td>";
-                        s += "<td id='port" + acl[0][1] + "_" + i + "'>" + (index < acl[i].length ? acl[i][index + 1] : "") + "</td>" +
-                             "<td><button id='del" + acl[0][1] + "_" + i + "' type='button'" +
-                                         "class='am-btn-sm am-btn-warning' onclick='deleteExtendedTerm(id)'>删除</button></td></tr>";
-                    }
-                    s += "</table></div></div></div></div>";
+                    for (let i = 1; i < acl.length; i++)
+                        s += "<li><p id='term" + ss[4] + "_" + i + "'>" + acl[i] + "</p><button id='del" + ss[4] + "_" + i + "' type='button'" +
+                             "class='am-btn-sm am-btn-warning' onclick=\"deleteTerm(id, 'extended')\">删除</button></li>";
+                    s += "</ul></div></div></div></div>";
                     ext += s;
                 }
             }
@@ -79,7 +49,7 @@ $.ajax({
                 "<label class='am-radio-inline' style='font-size: 20px'>" +
                 "<input type='radio' name='radioStandard' value='deny' style='width: 20px; height: 20px'>&nbsp;禁止</label>" +
                 "</div><div class='am-u-lg-3'>" +
-                "<button id='saveStandard' type='button' class='am-btn am-btn-secondary'>保存</button>" +
+                "<button id='saveStandard' type='button' class='am-btn am-btn-secondary' onclick='saveStandard()'>保存</button>" +
                 "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
                 "<input id='ipStandard' type='text' class='am-form-field' placeholder='IP'></div><div class='am-u-lg-6'>" +
                 "<input id='maskStandard' type='text' class='am-form-field' placeholder='反掩码'>" +

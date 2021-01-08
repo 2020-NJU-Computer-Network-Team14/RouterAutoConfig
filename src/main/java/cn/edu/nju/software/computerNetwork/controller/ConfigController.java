@@ -101,7 +101,7 @@ public class ConfigController {
      }
 
     @RequestMapping(value = "show_acl")
-    public String showAccessList(HttpServletRequest user) {
+    public List<List<String>> showAccessList(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
 
@@ -158,31 +158,23 @@ public class ConfigController {
         return routerService.configCancelAccessListGlobal(routerName, id, std);
     }
 
-    @RequestMapping(value = "deleteStandardTerm")
-    public String deleteStandardTerm(HttpServletRequest user) {
+    @RequestMapping(value = "deleteTerm")
+    public String deleteTerm(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
         String id = user.getParameter("id");
-        String permit = user.getParameter("permit");
-        String ip = user.getParameter("ip");
-        String mask = user.getParameter("mask");
+        String std = user.getParameter("std");
+        String term = user.getParameter("term");
 
-        return routerService.configCancelAccessListGlobal(routerName, id, permit, ip, mask);
+        return routerService.configCancelAccessListGlobal(routerName, id, std, term);
     }
 
-    @RequestMapping(value = "deleteExtendedTerm")
-    public String deleteExtendedTerm(HttpServletRequest user) {
-
-        String routerName = user.getParameter("router");
-        String id = user.getParameter("id");
-        String permit = user.getParameter("permit");
-        String protocol = user.getParameter("protocol");
-        String srcIp = user.getParameter("srcIp");
-        String srcMask = user.getParameter("srcMask");
-        String destIp = user.getParameter("destIp");
-        String destMask = user.getParameter("destMask");
-        String port = user.getParameter("port");
-        return routerService.configCancelAccessListGlobal(routerName, id, permit, protocol, srcIp, srcMask, destIp,
-                destMask, "=", port);
-    }
+//    @RequestMapping(value = "deleteExtendedTerm")
+//    public String deleteExtendedTerm(HttpServletRequest user) {
+//
+//        String routerName = user.getParameter("router");
+//        String id = user.getParameter("id");
+//        return routerService.configCancelAccessListGlobal(routerName, id, permit, protocol, srcIp, srcMask, destIp,
+//                destMask, "=", port);
+//    }
 }
