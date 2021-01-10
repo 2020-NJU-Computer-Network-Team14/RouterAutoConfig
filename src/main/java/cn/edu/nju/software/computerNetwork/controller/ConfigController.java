@@ -134,6 +134,7 @@ public class ConfigController {
         String routerName = user.getParameter("router");
         String id = user.getParameter("id");
         String permit = user.getParameter("permit");
+        String protocol = user.getParameter("protocol");
 
         String srcIp = user.getParameter("srcIp");
         String srcMask = user.getParameter("srcMask");
@@ -141,21 +142,21 @@ public class ConfigController {
         String destIp = user.getParameter("destIp");
         String destMask = user.getParameter("destMask");
 
-        String protocol = user.getParameter("protocol");
+        String relation = user.getParameter("relation");
         String port = user.getParameter("port");
 
         return routerService.configCreateAccessListExtend(routerName, id, permit, protocol, srcIp, srcMask, destIp,
-            destMask, "=", port);
+            destMask, relation, port);
     }
 
     @RequestMapping(value = "deleteList")
     public String deleteList(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
-        String id = user.getParameter("id");
         String std = user.getParameter("std");
+        String id = user.getParameter("id");
 
-        return routerService.configCancelAccessListGlobal(routerName, id, std);
+        return routerService.configCancelAccessListGlobal(routerName, std, id);
     }
 
     @RequestMapping(value = "deleteTerm")

@@ -86,8 +86,8 @@ public class RouterServiceMockImpl implements RouterService {
 
         s = new ArrayList<>();
         s.add("Standard IP access list test");
-        s.add("deny 1.1.1.1 0.0.0.1");
-        s.add("permit any");
+        s.add("deny  1.1.1.1  0.0.0.1");
+        s.add("permit  any");
         ss.add(s);
         return ss;
     }
@@ -118,7 +118,7 @@ public class RouterServiceMockImpl implements RouterService {
 
     @Override
     public String execute(String routerName, String command) {
-        return "aaa";
+        return "aaa\nbbb\nRouter#".replaceAll("\n", "<br>");
     }
 
     @Override

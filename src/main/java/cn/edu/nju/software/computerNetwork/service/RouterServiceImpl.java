@@ -19,7 +19,7 @@ import cn.edu.nju.software.computerNetwork.router.Router;
  *  
  */
 
-@Service
+@Service("route-service")
 public class RouterServiceImpl implements RouterService {
 
     private Map<String, Router> routers = new HashMap<>();
@@ -197,7 +197,7 @@ public class RouterServiceImpl implements RouterService {
             return "路由器未连接！";
         }
         try {
-            return routers.get(routerName).execute(command);
+            return routers.get(routerName).execute(command).replaceAll("\n", "<br>");
         } catch (Exception e) {
             return "未知IO异常……";
         }

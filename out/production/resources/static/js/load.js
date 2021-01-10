@@ -25,14 +25,14 @@ $.ajax({
                             "<div class='am-panel-bd'><ul class='am-list'>";
                 if (ss[0] === "Standard") {
                     for (let i = 1; i < acl.length; i++)
-                        s += "<li><p id='term" + ss[4] + "_" + i + "'>" + acl[i] + "</p><button id='del" + ss[4] + "_" + i + "' type='button'" +
+                        s += "<li><span id='term" + ss[4] + "_" + i + "'>" + acl[i].replaceAll(" ", "&nbsp;&nbsp;") + "</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id='del" + ss[4] + "_" + i + "' type='button'" +
                              "class='am-btn-sm am-btn-warning' onclick=\"deleteTerm(id, 'standard')\">删除</button></li>";
                     s += "</ul></div></div></div></div>";
                     std += s;
                 }
                 else {
                     for (let i = 1; i < acl.length; i++)
-                        s += "<li><p id='term" + ss[4] + "_" + i + "'>" + acl[i] + "</p><button id='del" + ss[4] + "_" + i + "' type='button'" +
+                        s += "<li><span id='term" + ss[4] + "_" + i + "'>" + acl[i].replaceAll(" ", "&nbsp;&nbsp;") + "</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id='del" + ss[4] + "_" + i + "' type='button'" +
                              "class='am-btn-sm am-btn-warning' onclick=\"deleteTerm(id, 'extended')\">删除</button></li>";
                     s += "</ul></div></div></div></div>";
                     ext += s;
@@ -45,7 +45,7 @@ $.ajax({
                 "<div class='am-panel-bd'><div class='am-g' style='font-size: 20px'><div class='am-u-lg-3'>" +
                 "<input id='idStandard' type='text' class='am-form-field' placeholder='编号/名称'></div><div class='am-u-lg-6'>" +
                 "<label class='am-radio-inline' style='font-size: 20px'>" +
-                "<input type='radio' name='radioStandard' value='permit' style='width: 20px; height: 20px' checked>&nbsp;允许</label>" +
+                "<input type='radio' name='radioStandard' value='permit' style='width: 20px; height: 20px'>&nbsp;允许</label>" +
                 "<label class='am-radio-inline' style='font-size: 20px'>" +
                 "<input type='radio' name='radioStandard' value='deny' style='width: 20px; height: 20px'>&nbsp;禁止</label>" +
                 "</div><div class='am-u-lg-3'>" +
@@ -64,23 +64,27 @@ $.ajax({
                                "<input id='idExtended' type='text' class='am-form-field' placeholder='编号/名称'></div>" +
                                "<div class='am-u-lg-6'>" +
                                "<label class='am-radio-inline' style='font-size: 20px'>" +
-                                   "<input type='radio' name='radioExtended' value='permit' style='width: 20px; height: 20px' checked>&nbsp;允许</label>" +
+                                   "<input type='radio' name='radioExtended' value='permit' style='width: 20px; height: 20px'>&nbsp;允许</label>" +
                                "<label class='am-radio-inline' style='font-size: 20px'>" +
                                    "<input type='radio' name='radioExtended' value='deny' style='width: 20px; height: 20px'>&nbsp;禁止</label></div>" +
-                               "<div class='am-u-lg-3'><button id='saveExtended' type='button' class='am-btn am-btn-secondary'>保存</button>" +
+                               "<div class='am-u-lg-3'><button id='saveExtended' type='button' class='am-btn am-btn-secondary' onclick='saveExtended()'>保存</button>" +
                                "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
                                    "<input id='srcIpExtended' type='text' class='am-form-field' placeholder='源IP'>" +
-                       "</div><div class='am-u-lg-6'>" +
-                       "<input id='srcMaskExtended' type='text' class='am-form-field' placeholder='源反掩码'>" +
-                       "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
-                       "<input id='destIpExtended' type='text' class='am-form-field' placeholder='目的IP'>" +
-                       "</div><div class='am-u-lg-6'>" +
-                       "<input id='destMaskExtended' type='text' class='am-form-field' placeholder='目的反掩码'>" +
-                       "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
-                       "<input id='protocol' type='text' class='am-form-field' placeholder='协议'>" +
-                       "</div><div class='am-u-lg-6'>" +
-                       "<input id='port' type='text' class='am-form-field' placeholder='端口'>" +
-                       "</div></div></div></div></div>"
+                               "</div><div class='am-u-lg-6'>" +
+                                   "<input id='srcMaskExtended' type='text' class='am-form-field' placeholder='源反掩码'>" +
+                               "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
+                                   "<input id='destIpExtended' type='text' class='am-form-field' placeholder='目的IP'>" +
+                               "</div><div class='am-u-lg-6'>" +
+                                   "<input id='destMaskExtended' type='text' class='am-form-field' placeholder='目的反掩码'>" +
+                               "</div></div><br><div class='am-g'><div class='am-u-lg-6'>" +
+                                   "<input id='protocol' type='text' class='am-form-field' placeholder='协议'>" +
+                               "</div><div class='am-u-lg-3'><select id='relation' class='am-form-field'>" +
+                                   "<option value=''></option><option value='eq'>等于</option>" +
+                                   "<option value='lt'>小于</option><option value='le'>小于等于</option>" +
+                                   "<option value='gt'>大于</option><option value='ge'>大于等于</option></select>" +
+                               "</div><div class='am-u-lg-3'>" +
+                                   "<input id='port' type='text' class='am-form-field' placeholder='端口'>" +
+                               "</div></div></div></div></div>"
             $("#tabExtended").html(ext);
         }
     }

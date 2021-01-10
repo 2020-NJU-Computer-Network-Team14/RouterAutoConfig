@@ -7,7 +7,7 @@ function saveStandard() {
         url: "/standard",
         data: {
             id: $("#idStandard").val(),
-            permit: $("input[name='radioStandard']:checked").val(),
+            permit: $("input[name='radioStandard']:checked").val() == null ? "" : $("input[name='radioStandard']:checked").val(),
             ip: $("#ipStandard").val(),
             mask: $("#maskStandard").val(),
             router: $("title").html()
@@ -26,15 +26,16 @@ function saveExtended() {
     progress.start();
     $.ajax({
         type: "post",
-        url: "/extend",
+        url: "/extended",
         data: {
             id: $("#idExtended").val(),
-            permit: $("input[name='radioExtended']:checked").val(),
+            permit: $("input[name='radioExtended']:checked").val() == null ? "" : $("input[name='radioExtended']:checked").val(),
             srcIp: $("#srcIpExtended").val(),
             srcMask: $("#srcMaskExtended").val(),
             destIp: $("#destIpExtended").val(),
             destMask: $("#destMaskExtended").val(),
             protocol: $("#protocol").val(),
+            relation: $("#relation option:selected").val(),
             port: $("#port").val(),
             router: $("title").html()
         },
@@ -77,7 +78,7 @@ function deleteTerm(id, std) {
         data: {
             id: i.slice(0, i.indexOf("_")),
             std: std,
-            term: $("#term" + i).html(),
+            term: $("#term" + i).html().replaceAll("&nbsp;&nbsp;", " "),
             router: $("title").html()
         },
         success: function (e) {

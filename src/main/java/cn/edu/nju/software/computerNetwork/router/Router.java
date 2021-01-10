@@ -193,7 +193,8 @@ public class Router {
 		sb.append("ip access-list extend");
 		sb.append(" ");
 		sb.append(numberOrName);
-		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+System.out.println(sb.toString());
+//		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
 
 		sb = new StringBuilder();
 		sb.append(permitOrDeny);
@@ -219,8 +220,8 @@ public class Router {
 			sb.append(" ");
 			sb.append(port);
 		}
-
-		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+System.out.println(sb.toString());
+//		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
 
 		end();
 	}
