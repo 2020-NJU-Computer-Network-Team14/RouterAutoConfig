@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping()
 public class ConfigController {
 
-    @Resource(name = "test-route-service")
+    @Resource(name = "route-service")
     private RouterService routerService;
 
     @RequestMapping(value = "telnet")
@@ -109,11 +109,12 @@ public class ConfigController {
     }
 
     @RequestMapping(value = "show_interface")
-    public String showInterface(HttpServletRequest user) {
+    public List<String> showInterface(HttpServletRequest user) {
 
         String routerName = user.getParameter("router");
+        String interfaceName = user.getParameter("interface");
 
-        return routerService.showIpInterface(routerName);
+        return routerService.showIpInterface(routerName,interfaceName);
     }
 
     @RequestMapping(value = "standard")

@@ -41,3 +41,21 @@ $("#remove").click(function () {
         }
     });
 });
+
+$("#search").click(function () {
+    let progress = $.AMUI.progress;
+    progress.start();
+    $.ajax({
+        type: "post",
+        url: "/show_interface",
+        data: {
+            interface: $("#interface1").val(),
+            router: $("title").html()
+        },
+        success: function (e) {
+            progress.done();
+            if (e !== null)
+                alert("出站：" + e[0] + "，入站：" + e[1]);
+        }
+    });
+});

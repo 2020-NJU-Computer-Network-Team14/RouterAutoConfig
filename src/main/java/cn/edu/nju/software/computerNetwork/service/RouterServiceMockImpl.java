@@ -93,9 +93,12 @@ public class RouterServiceMockImpl implements RouterService {
     }
 
     @Override
-    public String showIpInterface(String routerName) {
-        System.out.println(routerName);
-        return "Success";
+    public List<String> showIpInterface(String routerName,String intf) {
+        System.out.println(routerName+" "+intf);
+         List<String> s = new ArrayList<>();
+        s.add("Outgoing access list is test");
+        s.add("Inbound access list is testa");
+        return s;
     }
 
     @Override

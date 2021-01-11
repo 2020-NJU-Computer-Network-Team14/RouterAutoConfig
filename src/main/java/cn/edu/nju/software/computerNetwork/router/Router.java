@@ -193,8 +193,7 @@ public class Router {
 		sb.append("ip access-list extend");
 		sb.append(" ");
 		sb.append(numberOrName);
-System.out.println(sb.toString());
-//		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
 
 		sb = new StringBuilder();
 		sb.append(permitOrDeny);
@@ -220,8 +219,7 @@ System.out.println(sb.toString());
 			sb.append(" ");
 			sb.append(port);
 		}
-System.out.println(sb.toString());
-//		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
+		telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
 
 		end();
 	}
@@ -251,7 +249,9 @@ System.out.println(sb.toString());
 		inConfigureTerminal();
 
 		command = "no ip access-list " + stdOrext + " " + number;
-		telnetService.executeWithoutRemove(command, promptInConfigureInterface());
+		System.out.println(command + " 1");
+		telnetService.executeWithoutRemove(command, promptInConfigureTerminal());
+		System.out.println(command + " 2");
 
 		end();
 	}
@@ -259,69 +259,16 @@ System.out.println(sb.toString());
 	/**
 	 * 取消某一小条
 	 */
-	// public void configCancelAccessListGlobal(String numberOrName, String
-	// permitOrDeny, String ipOrAny,
-	// String mask) throws IOException {
-	//
-	// inConfigureTerminal();
-	//
-	// String command = "ip access-list standard " + numberOrName;
-	// telnetService.executeWithoutRemove(command, promptInAcl());
-	//
-	// command = "no " + permitOrDeny + " " + ipOrAny + " " + mask;
-	// telnetService.executeWithoutRemove(command, promptInAcl());
-	//
-	// end();
-	// }
-
-	// public void configCancelAccessListGlobal(String numberOrName, String
-	// permitOrDeny, String protocol, String sourceIp,
-	// String sourceMask, String aimIp, String aimMask, String relation, String
-	// port) throws IOException {
-	//
-	// inConfigureTerminal();
-	//
-	// String command = "ip access-list extended " + numberOrName;
-	// telnetService.executeWithoutRemove(command, promptInAcl());
-	//
-	// StringBuilder sb = new StringBuilder();
-	// sb.append(permitOrDeny);
-	// sb.append(" ");
-	// sb.append(protocol);
-	// sb.append(" ");
-	// sb.append(sourceIp);
-	// if (!"".equals(sourceMask)) {
-	// sb.append(" ");
-	// sb.append(sourceMask);
-	// }
-	// sb.append(" ");
-	// sb.append(aimIp);
-	// if (!"".equals(aimMask)) {
-	// sb.append(" ");
-	// sb.append(aimMask);
-	// }
-	// if (!"".equals(relation)) {
-	// sb.append(" ");
-	// sb.append(relation);
-	// }
-	// if (!"".equals(port)) {
-	// sb.append(" ");
-	// sb.append(port);
-	// }
-	// telnetService.executeWithoutRemove(sb.toString(), promptInAcl());
-	//
-	// end();
-	// }
-
 	public void configCancelAccessListGlobal(String id, String std, String term) throws IOException {
 
 		inConfigureTerminal();
 
 		String command = "ip access-list " + std + " " + id;
+		System.out.println(command + " 3");
 		telnetService.executeWithoutRemove(command, promptInAcl());
-
+		System.out.println(command + " 4");
 		telnetService.executeWithoutRemove("no " + term, promptInAcl());
-
+		System.out.println(command + " 5");
 		end();
 	}
 
@@ -354,10 +301,24 @@ System.out.println(sb.toString());
 		return ret;
 	}
 
-	public String showIpInterface() throws IOException {
-		String command = "show ip int";
-		String list = telnetService.execute(command, promptInEnable());
-		return list;
+	public List<String> showIpInterface(String intf) throws IOException {
+		String command = "show ip interface "+intf;
+		telnetService.submitCommand(command);
+		telnetService.submitCommand("f");
+		String msg = telnetService.getOutput(promptInEnable());
+		telnetService.getOutput(promptInEnable());
+
+		String[] lines = msg.split("\n");
+		List<String> ret = new LinkedList<>();
+		for (int i = 0; i < lines.length; i++) {
+			if (lines[i].contains("Outgoing access list is") ||lines[i].contains("Inbound  access list is")  ){
+				String[] temp = lines[i].trim().split(" ");
+				ret.add(temp[temp.length-1]);
+			}
+
+		}
+
+		return ret;
 	}
 
 	public String execute(String command) throws IOException {

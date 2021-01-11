@@ -89,7 +89,7 @@ public class TelnetService implements AutoCloseable {
         return getOutput(prompts).toString();
     }
 
-    private String getOutput(List<String> prompts) throws IOException {
+    public String getOutput(List<String> prompts) throws IOException {
         StringBuilder buf = new StringBuilder();
         while (true) {
             char ch = (char)in.read();

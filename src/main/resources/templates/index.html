@@ -9,61 +9,62 @@
     <script src="/js/amaze/jquery-3.3.1.js"></script>
     <script src="/js/amaze/amazeui.min.js"></script>
     <style>
-        .router1 {
-            position: relative;
-            float: left;
-            display: inline-block;
-            width: 60%;
-            height: 700px;
-            margin-left: 10px;
-            margin-top: 20px;
-            background-image: url("/image/tuopu.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            text-align: center;
-        }
-        .login {
-            display: inline-block;
-            font-size: 20px;
-            width: 39%;
-            height: 600px;
-            margin-top: 60px;
-            text-align: center;
-        }
-        .hide1 {
-            position: absolute;
-            left: 31px;
-            top: 68px;
-            width: 168px;
-            height: 122px;
-            border-radius: 39%;
-        }
-        .hide2 {
-            position: absolute;
-            left: 340px;
-            top: 73px;
-            width: 168px;
-            height: 121px;
-            border-radius: 39%;
-        }
-        .hide3 {
-            position: absolute;
-            left: 669px;
-            top: 76px;
-            width: 170px;
-            height: 121px;
-            border-radius: 39%;
-        }
-        .hide1:hover {
-            background-color: rgb(0,255,0,0.8);
-        }
-        .hide2:hover {
-            background-color: rgb(0,255,0,0.7);
-        }
-        .hide3:hover {
-            background-color: rgb(0,255,0,0.7);
-        }
-    </style>
+            .router1 {
+                position: relative;
+                float: left;
+                display: inline-block;
+                width: 900px;
+                height: 600px;
+                margin-left: 10px;
+                margin-top: 60px;
+                background-image: url("/image/tuopu.png");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                text-align: center;
+            }
+            .login {
+                display: inline-block;
+                font-size: 20px;
+                width: 400px;
+                height: 600px;
+                margin-top: 60px;
+                text-align: center;
+            }
+            .hide1 {
+                position: absolute;
+                left: 60px;
+                top: 32px;
+                width: 155px;
+                height: 116px;
+                border-radius: 39%;
+            }
+            .hide2 {
+                position: absolute;
+                left: 340px;
+                top: 35px;
+                width: 155px;
+                height: 116px;
+                border-radius: 39%;
+            }
+            .hide3 {
+                position: absolute;
+                left: 638px;
+                top: 38px;
+                width: 155px;
+                height: 116px;
+                border-radius: 39%;
+            }
+            .hide1:hover {
+                background-color: rgb(0,255,0,0.8);
+            }
+             .hide2:hover {
+                background-color: rgb(0,255,0,0.7);
+            }
+             .hide3:hover {
+                background-color: rgb(0,255,0,0.7);
+            }
+        </style>
 </head>
 
 <body>
@@ -92,20 +93,20 @@
         $("#ip").val("192.168.10.3");
         $("#password").val("CISCO");
         $("#enable").val("CISCO");
-        $("#router").val("R1");
+        $("#router").val("RA");
 
     }
     function showInfo2() {
         $("#ip").val("192.168.10.4");
         $("#password").val("CISCO");
         $("#enable").val("CISCO");
-        $("#router").val("R2");
+        $("#router").val("RB");
     }
     function showInfo3() {
         $("#ip").val("192.168.10.5");
         $("#password").val("CISCO");
         $("#enable").val("CISCO");
-        $("#router").val("R3");
+        $("#router").val("RC");
     }
 </script>
 </html>

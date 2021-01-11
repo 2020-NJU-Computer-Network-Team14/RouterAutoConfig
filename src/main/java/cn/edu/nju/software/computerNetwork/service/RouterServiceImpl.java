@@ -139,14 +139,14 @@ public class RouterServiceImpl implements RouterService {
     }
 
     @Override
-    public String showIpInterface(String routerName) {
+    public List<String> showIpInterface(String routerName,String intf) {
         if (!routers.containsKey(routerName)) {
-            return "Router is not connected";
+            return null;
         }
         try {
-            return routers.get(routerName).showIpInterface();
+            return routers.get(routerName).showIpInterface(intf);
         } catch (Exception e) {
-            return "IO error";
+            return null;
         }
     }
 

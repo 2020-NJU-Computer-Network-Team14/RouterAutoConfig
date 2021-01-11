@@ -34,7 +34,7 @@ public interface RouterService {
 
     List<List<String>> showIpAccessList(String routerName);
 
-    String showIpInterface(String routerName);
+    List<String> showIpInterface(String routerName,String intf);
 
     String configCancelAccessListGlobal(String routerName, String stdOrext, String number);
 
