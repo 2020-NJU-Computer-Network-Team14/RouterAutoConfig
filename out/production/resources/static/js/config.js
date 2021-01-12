@@ -54,8 +54,11 @@ $("#search").click(function () {
         },
         success: function (e) {
             progress.done();
-            if (e !== null)
-                alert("出站：" + e[0] + "，入站：" + e[1]);
+            if (e !== null) {
+                let outACL = e[0] === "set" ? "未设置" : e[0];
+                let inACL = e[1] === "set" ? "未设置" : e[1];
+                alert("出站：" + outACL + "，入站：" + inACL);
+            }
         }
     });
 });

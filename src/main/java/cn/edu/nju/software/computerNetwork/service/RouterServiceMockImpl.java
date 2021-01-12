@@ -33,7 +33,7 @@ public class RouterServiceMockImpl implements RouterService {
     @Override
     public String ping(String routerName, String ip) {
         System.out.println(routerName + " " + ip);
-        return "Success";
+        return "Overtime";
     }
 
     @Override
@@ -95,9 +95,9 @@ public class RouterServiceMockImpl implements RouterService {
     @Override
     public List<String> showIpInterface(String routerName,String intf) {
         System.out.println(routerName+" "+intf);
-         List<String> s = new ArrayList<>();
-        s.add("Outgoing access list is test");
-        s.add("Inbound access list is testa");
+        List<String> s = new ArrayList<>();
+        s.add("test");
+        s.add("set");
         return s;
     }
 

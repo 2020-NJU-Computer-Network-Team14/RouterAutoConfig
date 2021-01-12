@@ -1,0 +1,43 @@
+.topology {
+    position: relative;
+    float: left;
+    display: inline-block;
+    width: 900px;
+    height: 600px;
+    margin-left: 10px;
+    margin-top: 60px;
+    background-image: url("/image/topology.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+}
+.login {
+    display: inline-block;
+    font-size: 20px;
+    width: 400px;
+    height: 600px;
+    margin-top: 60px;
+    text-align: center;
+}
+.hide {
+    position: absolute;
+    width: 155px;
+    height: 116px;
+    border-radius: 39%;
+}
+.hide:hover {
+    background-color: rgb(0, 255, 0, 0.7);
+}
+#routerA {
+    left: 60px;
+    top: 32px;
+}
+#routerB {
+    left: 340px;
+    top: 35px;
+}
+#routerC {
+    left: 638px;
+    top: 38px;
+}
